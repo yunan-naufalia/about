@@ -107,7 +107,7 @@
   .body p { margin: 0 0 12px; text-align: justify; hyphens: auto; -webkit-hyphens: auto; }
   .body p:last-child { margin-bottom: 0; }
   h1, h2, h3 { margin: 0; letter-spacing: -0.02em; line-height: 1.15; }
-  .window.zoomed { left: 16px !important; top: 10px !important; width: calc(100vw - 32px) !important; max-width: none; max-height: calc(100dvh - 30px - 110px); }
+  .window.zoomed { left: 16px !important; top: 10px !important; width: calc(100vw - 32px) !important; max-width: none; max-height: calc(100dvh - 30px - 110px) !important; }
 
   /* about window */
   .about { display: grid; grid-template-columns: 170px 1fr; gap: 22px; align-items: start; }
@@ -265,7 +265,7 @@
     .note .titlebar, .music .titlebar { display: none; }
     .icons { position: static; width: auto; grid-template-columns: repeat(4, 1fr); gap: 10px 4px; }
     .window:not(.note):not(.music) {
-      position: fixed !important; left: 8px !important; right: 8px; top: 38px !important; bottom: 88px; width: auto !important; max-width: none; max-height: none;
+      position: fixed !important; left: 8px !important; right: 8px; top: 38px !important; bottom: 88px; width: auto !important; max-width: none; max-height: none !important;
       z-index: 950 !important;
     }
     .titlebar { cursor: default; }
@@ -325,7 +325,7 @@
 
   <!-- music player -->
   <section class="window music" id="w-music" aria-labelledby="t-music">
-    <div class="titlebar" data-drag><div class="lights"><button class="close" aria-label="Close">×</button><button class="min" aria-label="Minimise">−</button><button class="zoom" aria-label="Zoom" disabled>+</button></div><span id="t-music">music</span></div>
+    <div class="titlebar" data-drag><div class="lights"><button class="close" aria-label="Close">×</button><button class="min" aria-label="Minimize">−</button><button class="zoom" aria-label="Zoom" disabled>+</button></div><span id="t-music">music</span></div>
     <div class="body" id="player">
       <div class="player">
         <div class="cover" id="cover">🌸</div>
@@ -350,7 +350,7 @@
   <!-- desktop icons -->
   <nav class="icons" aria-label="Folders">
     <button class="icon" data-open="about"><span class="art"><svg><use href="#folder"/></svg><span class="em">👩🏻‍💻</span></span><span class="label">about me</span></button>
-    <button class="icon" data-open="services"><span class="art"><svg><use href="#folder"/></svg><span class="em">🌐</span></span><span class="label">specialisations</span></button>
+    <button class="icon" data-open="services"><span class="art"><svg><use href="#folder"/></svg><span class="em">🌐</span></span><span class="label">specializations</span></button>
     <button class="icon" data-open="creds"><span class="art"><svg><use href="#folder"/></svg><span class="em">🎓</span></span><span class="label">credentials</span></button>
     <button class="icon" data-open="reviews"><span class="art"><svg><use href="#folder"/></svg><span class="em">💌</span></span><span class="label">reviews</span></button>
     <button class="icon" data-open="process"><span class="art"><svg><use href="#folder"/></svg><span class="em">✅</span></span><span class="label">how I work</span></button>
@@ -360,7 +360,7 @@
 
   <!-- About -->
   <section class="window" id="w-about" aria-labelledby="t-about" hidden>
-    <div class="titlebar" data-drag><div class="lights"><button class="close" aria-label="Close">×</button><button class="min" aria-label="Minimise">−</button><button class="zoom" aria-label="Zoom">+</button></div><span id="t-about">about me</span></div>
+    <div class="titlebar" data-drag><div class="lights"><button class="close" aria-label="Close">×</button><button class="min" aria-label="Minimize">−</button><button class="zoom" aria-label="Zoom">+</button></div><span id="t-about">about me</span></div>
     <div class="body">
       <div class="about">
         <img src="photo.jpg" alt="Portrait of Yunan Naufalia Hanantio" width="170" height="200">
@@ -383,13 +383,13 @@
     </div>
   </section>
 
-  <!-- Specialisations (Finder) -->
+  <!-- Specializations (Finder) -->
   <section class="window" id="w-services" aria-labelledby="t-services" style="width:680px" hidden>
-    <div class="titlebar" data-drag><div class="lights"><button class="close" aria-label="Close">×</button><button class="min" aria-label="Minimise">−</button><button class="zoom" aria-label="Zoom">+</button></div><span id="t-services">specialisations</span></div>
+    <div class="titlebar" data-drag><div class="lights"><button class="close" aria-label="Close">×</button><button class="min" aria-label="Minimize">−</button><button class="zoom" aria-label="Zoom">+</button></div><span id="t-services">specializations</span></div>
     <div class="finder">
       <div class="side">
-        <small>favourites</small>
-        <div class="on">🌐 specialisations</div>
+        <small>favorites</small>
+        <div class="on">🌐 specializations</div>
         <div>🌸 services</div>
         <div>🇬🇧 EN → ID</div>
         <div>🇮🇩 ID → EN</div>
@@ -417,7 +417,7 @@
 
   <!-- Credentials (list view) -->
   <section class="window" id="w-creds" aria-labelledby="t-creds" style="width:600px" hidden>
-    <div class="titlebar" data-drag><div class="lights"><button class="close" aria-label="Close">×</button><button class="min" aria-label="Minimise">−</button><button class="zoom" aria-label="Zoom">+</button></div><span id="t-creds">credentials</span></div>
+    <div class="titlebar" data-drag><div class="lights"><button class="close" aria-label="Close">×</button><button class="min" aria-label="Minimize">−</button><button class="zoom" aria-label="Zoom">+</button></div><span id="t-creds">credentials</span></div>
     <div class="body" style="padding:6px 8px 10px">
       <table class="list">
         <thead><tr><th></th><th>name</th><th></th></tr></thead>
@@ -433,7 +433,7 @@
 
   <!-- Reviews (Messages) -->
   <section class="window" id="w-reviews" aria-labelledby="t-reviews" style="width:500px" hidden>
-    <div class="titlebar" data-drag><div class="lights"><button class="close" aria-label="Close">×</button><button class="min" aria-label="Minimise">−</button><button class="zoom" aria-label="Zoom">+</button></div><span id="t-reviews">reviews</span></div>
+    <div class="titlebar" data-drag><div class="lights"><button class="close" aria-label="Close">×</button><button class="min" aria-label="Minimize">−</button><button class="zoom" aria-label="Zoom">+</button></div><span id="t-reviews">reviews</span></div>
     <div class="body">
       <div class="chat">
         <div class="when">thesis questionnaire · EN → ID · Oct 2026</div>
@@ -454,13 +454,13 @@
 
   <!-- How I work (Reminders) -->
   <section class="window" id="w-process" aria-labelledby="t-process" style="width:440px" hidden>
-    <div class="titlebar" data-drag><div class="lights"><button class="close" aria-label="Close">×</button><button class="min" aria-label="Minimise">−</button><button class="zoom" aria-label="Zoom">+</button></div><span id="t-process">how I work</span></div>
+    <div class="titlebar" data-drag><div class="lights"><button class="close" aria-label="Close">×</button><button class="min" aria-label="Minimize">−</button><button class="zoom" aria-label="Zoom">+</button></div><span id="t-process">how I work</span></div>
     <div class="body">
       <h2 style="font-size:22px;color:var(--pink-deep);margin-bottom:4px">your project</h2>
       <ul class="todo">
         <li class="done"><span class="tick">✓</span><div><b>brief</b><p>send the file, your deadline and what it's for, plus any glossary or reference texts you already use.</p></div></li>
         <li class="done"><span class="tick">✓</span><div><b>quote</b><p>a clear PDF quotation with the scope, fee and delivery date.</p></div></li>
-        <li><span class="tick"></span><div><b>terminology</b><p>key terms checked against official sources (regulations, government and international-organisation sites) and kept in a project glossary. your own glossary always comes first.</p></div></li>
+        <li><span class="tick"></span><div><b>terminology</b><p>key terms checked against official sources (regulations, government and international-organization sites) and kept in a project glossary. your own glossary always comes first.</p></div></li>
         <li><span class="tick"></span><div><b>translate &amp; QA</b><p>translated with a translation memory so terms stay consistent, then a separate QA pass for numbers, names, terminology and format.</p></div></li>
         <li><span class="tick"></span><div><b>translator's notes</b><p>a review copy with my notes and questions as Word comments, so you can see the key choices and answer queries before the final file.</p></div></li>
         <li><span class="tick"></span><div><b>deliver</b><p>a clean file in your original layout, with your feedback applied and one round of revisions included. a translator's statement is available on request.</p></div></li>
@@ -470,7 +470,7 @@
 
   <!-- Contact (Mail) -->
   <section class="window" id="w-contact" aria-labelledby="t-contact" style="width:520px" hidden>
-    <div class="titlebar" data-drag><div class="lights"><button class="close" aria-label="Close">×</button><button class="min" aria-label="Minimise">−</button><button class="zoom" aria-label="Zoom">+</button></div><span id="t-contact">new message</span></div>
+    <div class="titlebar" data-drag><div class="lights"><button class="close" aria-label="Close">×</button><button class="min" aria-label="Minimize">−</button><button class="zoom" aria-label="Zoom">+</button></div><span id="t-contact">new message</span></div>
     <div class="body mail">
       <div class="row"><span>to:</span><span>Yunan &lt;ynaufaliah@gmail.com&gt;</span></div>
       <div class="row"><span>subject:</span><span>translation quote request</span></div>
@@ -488,14 +488,14 @@
 
   <!-- Photo (Preview) -->
   <section class="window preview" id="w-photo" aria-label="me.jpg" style="width:360px" hidden>
-    <div class="titlebar" data-drag><div class="lights"><button class="close" aria-label="Close">×</button><button class="min" aria-label="Minimise">−</button><button class="zoom" aria-label="Zoom">+</button></div><span>me.jpg</span></div>
+    <div class="titlebar" data-drag><div class="lights"><button class="close" aria-label="Close">×</button><button class="min" aria-label="Minimize">−</button><button class="zoom" aria-label="Zoom">+</button></div><span>me.jpg</span></div>
     <div class="body"><img src="photo.jpg" alt="Portrait of Yunan Naufalia Hanantio" width="600" height="600"></div>
   </section>
 </main>
 
 <nav class="dock" aria-label="Dock">
   <button class="g1" data-open="about" data-tip="about me" aria-label="About me">🌸<span class="dot"></span></button>
-  <button class="g2" data-open="services" data-tip="specialisations" aria-label="Specialisations">🌐<span class="dot"></span></button>
+  <button class="g2" data-open="services" data-tip="specializations" aria-label="Specializations">🌐<span class="dot"></span></button>
   <button class="g3" data-open="creds" data-tip="credentials" aria-label="Credentials">🎓<span class="dot"></span></button>
   <button class="g4 hide-sm" data-open="reviews" data-tip="reviews" aria-label="Reviews">💬<span class="dot"></span></button>
   <button class="g5 hide-sm" data-open="process" data-tip="how I work" aria-label="How I work">✅<span class="dot"></span></button>
@@ -516,8 +516,8 @@
     var clock = document.getElementById("clock");
     function tick() {
       var d = new Date();
-      var day = d.toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short" });
-      var time = d.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" });
+      var day = d.toLocaleDateString("en-US", { weekday: "short", month: "short", day: "numeric" }).replace(",", "");
+      var time = d.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit" });
       clock.textContent = phone.matches ? time : day + "  " + time;
     }
     tick(); setInterval(tick, 15000);
@@ -531,6 +531,9 @@
       document.querySelectorAll(".window").forEach(function (w) { w.classList.toggle("inactive", w !== el); });
       el.style.zIndex = ++z;
     }
+    function fit(el) { // stop the window's bottom edge above the dock
+      if (!phone.matches) el.style.maxHeight = Math.max(200, innerHeight - 30 - 100 - el.offsetTop) + "px";
+    }
     function place(el) {
       if (el.dataset.placed || phone.matches) return;
       var vw = innerWidth, vh = innerHeight - 30 - 100;
@@ -539,6 +542,7 @@
       var y = Math.max(12, Math.min(vh - 200, 40 + (opened % 5) * 26));
       el.style.left = x + "px"; el.style.top = y + "px";
       el.dataset.placed = "1"; opened++;
+      fit(el);
     }
     function syncDock() {
       document.querySelectorAll(".dock [data-open]").forEach(function (b) {
@@ -594,6 +598,7 @@
         var x = Math.max(-el.offsetWidth + 80, Math.min(innerWidth - 80, ox + e.clientX - sx));
         var y = Math.max(0, Math.min(innerHeight - 30 - 60, oy + e.clientY - sy));
         el.style.left = x + "px"; el.style.top = y + "px";
+        if (!isWidget(el)) fit(el);
       });
       bar.addEventListener("pointerup", function () { dragging = false; });
       bar.addEventListener("dblclick", function (e) {
@@ -714,8 +719,8 @@
       if (document.fonts) document.fonts.ready.then(function () { if (music.style.top === stacked) stack(); });
       var about = win("about");
       about.hidden = false;
-      about.style.left = Math.max(16, Math.round(innerWidth * 0.06)) + "px";
-      about.style.top = "34px"; about.dataset.placed = "1"; opened = 1;
+      about.style.left = "14px"; // tucked into the top-left corner
+      about.style.top = "14px"; about.dataset.placed = "1"; opened = 1; fit(about);
       focusWin(about);
     }
     syncDock();
