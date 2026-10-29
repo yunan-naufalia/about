@@ -1,0 +1,725 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Yunan Naufalia Hanantio · EN↔ID translator</title>
+<meta name="description" content="English–Indonesian translator for customs, trade, tax, legal and business content. HPI Professional Member (HPI-01-26-5793).">
+<meta property="og:title" content="Yunan Naufalia Hanantio · EN↔ID translator">
+<meta property="og:description" content="customs, trade, tax, legal and business translation between English and Indonesian.">
+<meta property="og:image" content="photo.jpg">
+<meta name="theme-color" content="#ffd6e7">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    color-scheme: light;
+    --ink: #3a2230; --muted: #8a6476; --line: rgba(120,60,90,.14);
+    --pink: #ff8fbf; --pink-deep: #e8559a; --rose: #ffd6e7; --blush: #fff1f7;
+    --win: rgba(255,250,252,.96); --bar: rgba(255,240,247,.72);
+    --shadow: 0 0 0 .5px rgba(90,30,60,.18), 0 24px 60px -12px rgba(150,40,90,.35), 0 8px 20px -8px rgba(150,40,90,.25);
+  }
+  * { box-sizing: border-box; }
+  html, body { height: 100%; }
+  body {
+    margin: 0; color: var(--ink); overflow: hidden;
+    font: 14px/1.55 -apple-system, BlinkMacSystemFont, "SF Pro Text", Inter, system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased; user-select: none; -webkit-user-select: none;
+    background-color: #ffd3e6;
+  }
+  a { color: var(--pink-deep); }
+  img { display: block; max-width: 100%; }
+  button { font: inherit; color: inherit; }
+  :focus-visible { outline: 2px solid var(--pink-deep); outline-offset: 2px; }
+
+  /* wallpaper: candy-pink gradient */
+  .wallpaper { position: fixed; inset: 0; z-index: -1; overflow: hidden;
+    background:
+      radial-gradient(60% 70% at 15% 20%, #ffc2dc 0%, transparent 60%),
+      radial-gradient(50% 60% at 85% 15%, #ffd1ea 0%, transparent 60%),
+      radial-gradient(60% 60% at 70% 90%, #ffd9c4 0%, transparent 60%),
+      radial-gradient(50% 50% at 20% 95%, #ffb3d4 0%, transparent 60%),
+      linear-gradient(160deg, #ffe4f0, #ffd0e4);
+  }
+  .wallpaper .glow { position: absolute; width: 42vmax; height: 42vmax; border-radius: 50%; background: #fff; opacity: .35; filter: blur(80px); left: 30%; top: 25%; }
+
+  /* menu bar */
+  .menubar {
+    position: fixed; top: 0; left: 0; right: 0; height: 30px; z-index: 1000;
+    display: flex; align-items: center; gap: 2px; padding: 0 10px;
+    background: var(--bar); -webkit-backdrop-filter: blur(24px) saturate(180%); backdrop-filter: blur(24px) saturate(180%);
+    box-shadow: 0 .5px 0 rgba(120,50,80,.18); font-size: 13px;
+  }
+  .menubar button { border: 0; background: none; padding: 3px 9px; border-radius: 5px; cursor: default; color: var(--ink); white-space: nowrap; }
+  .menubar button:hover { background: rgba(232,85,154,.14); }
+  .menubar .logo { font-size: 15px; padding: 2px 8px; }
+  .menubar .app { font-weight: 700; }
+  .menubar .spacer { flex: 1; }
+  .menubar .np { font-size: 12px; color: var(--muted); padding: 0 10px; max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .menubar .np[hidden] { display: none; }
+  .clock { font-variant-numeric: tabular-nums; padding: 3px 6px; }
+
+  /* desktop area */
+  .desktop { position: fixed; inset: 30px 0 0 0; }
+  .icons { position: absolute; top: 16px; right: 14px; display: grid; grid-auto-flow: row; gap: 6px; width: 104px; }
+  .icon {
+    display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 6px 4px; border: 0; background: none;
+    border-radius: 8px; cursor: default; text-align: center;
+  }
+  .icon .art { width: 64px; height: 54px; position: relative; display: grid; place-items: center; filter: drop-shadow(0 4px 6px rgba(160,50,100,.22)); }
+  .icon .art svg { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .icon .art .em { position: relative; font-size: 20px; margin-top: 10px; }
+  .icon .art.thumb { width: 54px; height: 54px; }
+  .icon .art.thumb img { width: 54px; height: 54px; object-fit: cover; border-radius: 6px; border: 3px solid #fff; }
+  .icon .label { font-size: 12px; font-weight: 500; line-height: 1.25; padding: 1px 6px; border-radius: 4px; color: var(--ink); text-shadow: 0 1px 2px rgba(255,255,255,.8); }
+  .icon:hover .art { transform: translateY(-1px); }
+  .icon:focus-visible { outline: none; }
+  .icon:focus-visible .label, .icon.sel .label { background: var(--pink-deep); color: #fff; text-shadow: none; }
+  .icon:focus-visible .art, .icon.sel .art { background: rgba(232,85,154,.14); border-radius: 8px; }
+
+  /* windows */
+  .window {
+    position: absolute; display: flex; flex-direction: column; width: 560px; max-width: calc(100vw - 32px);
+    max-height: calc(100dvh - 30px - 110px); border-radius: 12px; overflow: hidden;
+    background: var(--win); -webkit-backdrop-filter: blur(30px) saturate(180%); backdrop-filter: blur(30px) saturate(180%);
+    box-shadow: var(--shadow); user-select: text; -webkit-user-select: text;
+    animation: pop .22s cubic-bezier(.2,.9,.3,1.2);
+  }
+  .window[hidden] { display: none; }
+  .window.inactive .titlebar { opacity: .82; }
+  .window.inactive .lights button { background: #e3cfd8 !important; }
+  @keyframes pop { from { transform: scale(.94); opacity: 0; } to { transform: none; opacity: 1; } }
+  @media (prefers-reduced-motion: reduce) { .window { animation: none; } .dock a, .dock button { transition: none !important; } .eq i { animation: none !important; } }
+  .titlebar {
+    position: relative; flex: none; height: 38px; display: flex; align-items: center; justify-content: center;
+    font-size: 13px; font-weight: 600; cursor: grab; touch-action: none; user-select: none; -webkit-user-select: none;
+    background: linear-gradient(#fff6fa, #ffeaf3); border-bottom: .5px solid var(--line);
+  }
+  .titlebar:active { cursor: grabbing; }
+  .lights { position: absolute; left: 12px; top: 0; bottom: 0; display: flex; align-items: center; gap: 8px; }
+  .lights button { width: 12px; height: 12px; border-radius: 50%; border: 0; padding: 0; box-shadow: inset 0 0 0 .5px rgba(0,0,0,.15); display: grid; place-items: center; font-size: 9px; line-height: 1; color: transparent; cursor: default; }
+  .lights .close { background: #ff6b8b; }
+  .lights .min { background: #ffc35c; }
+  .lights .zoom { background: #7fd98a; }
+  .lights:hover .close { color: #7a1530; } .lights:hover .min { color: #7a4a00; } .lights:hover .zoom { color: #145a1e; }
+  .body { overflow: auto; padding: 20px 22px 22px; overscroll-behavior: contain; }
+  .body p { margin: 0 0 12px; text-align: justify; hyphens: auto; -webkit-hyphens: auto; }
+  .body p:last-child { margin-bottom: 0; }
+  h1, h2, h3 { margin: 0; letter-spacing: -0.02em; line-height: 1.15; }
+  .window.zoomed { left: 16px !important; top: 10px !important; width: calc(100vw - 32px) !important; max-width: none; max-height: calc(100dvh - 30px - 110px); }
+
+  /* about window */
+  .about { display: grid; grid-template-columns: 170px 1fr; gap: 22px; align-items: start; }
+  .about img { width: 170px; height: 200px; object-fit: cover; border-radius: 10px; box-shadow: 0 6px 18px rgba(160,50,100,.25); }
+  .about h1 { font-size: 26px; margin-bottom: 4px; }
+  .about .role { color: var(--pink-deep); font-weight: 600; margin: 0 0 14px; text-align: left !important; }
+  .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; }
+  .chip { font-size: 12px; font-weight: 600; padding: 4px 10px; border-radius: 999px; background: var(--rose); color: #9c2e62; }
+  .facts { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-top: 18px; }
+  .fact { background: #fff; border-radius: 10px; padding: 10px; text-align: center; box-shadow: 0 0 0 .5px var(--line); }
+  .fact b { display: block; font-size: 20px; color: var(--pink-deep); letter-spacing: -0.02em; }
+  .fact span { font-size: 11px; color: var(--muted); line-height: 1.3; display: block; }
+
+  /* finder-style window */
+  .finder { display: grid; grid-template-columns: 150px 1fr; min-height: 0; flex: 1; overflow: hidden; }
+  .finder .side { background: rgba(255,228,240,.7); padding: 14px 10px; border-right: .5px solid var(--line); font-size: 13px; }
+  .finder .side small { display: block; font-size: 11px; font-weight: 600; color: var(--muted); padding: 0 8px 6px; }
+  .finder .side div { padding: 4px 8px; border-radius: 6px; }
+  .finder .side div.on { background: rgba(232,85,154,.16); font-weight: 600; }
+  .finder .main { padding: 18px; overflow: auto; }
+  .specs { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 12px; }
+  .spec { background: #fff; border-radius: 12px; padding: 14px; box-shadow: 0 0 0 .5px var(--line); }
+  .spec .em { font-size: 26px; display: block; margin-bottom: 6px; }
+  .spec h3 { font-size: 14px; margin-bottom: 4px; }
+  .spec p { margin: 0; font-size: 12.5px; color: var(--muted); text-align: justify; hyphens: auto; -webkit-hyphens: auto; }
+  .services { margin-top: 14px; display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+  .services b { font-size: 12px; margin-right: 4px; }
+
+  /* list view (credentials) */
+  table.list { width: 100%; border-collapse: collapse; font-size: 13px; }
+  table.list th { text-align: left; font-size: 11px; font-weight: 600; color: var(--muted); padding: 6px 10px; border-bottom: .5px solid var(--line); }
+  table.list td { padding: 10px; vertical-align: top; }
+  table.list tr:nth-child(even) td { background: rgba(255,214,231,.35); }
+  table.list td:first-child { width: 42px; font-size: 22px; }
+  table.list b { display: block; }
+  table.list .sub { color: var(--muted); font-size: 12px; }
+  table.list a { font-weight: 600; white-space: nowrap; text-decoration: none; }
+
+  /* messages-style reviews */
+  .chat { display: flex; flex-direction: column; gap: 10px; }
+  .chat + .chat { margin-top: 22px; padding-top: 18px; border-top: .5px solid var(--line); }
+  .chat .when { text-align: center; font-size: 11px; color: var(--muted); }
+  .bubble { max-width: 88%; padding: 10px 14px; border-radius: 18px; font-size: 14px; line-height: 1.5; text-align: justify; hyphens: auto; -webkit-hyphens: auto; }
+  .bubble.them { background: #fff; border-bottom-left-radius: 6px; box-shadow: 0 0 0 .5px var(--line); }
+  .bubble.me { align-self: flex-end; background: linear-gradient(#ff8fbf, #f06aa8); color: #fff; border-bottom-right-radius: 6px; text-align: left; }
+  .sender { font-size: 11px; color: var(--muted); margin: 0 0 -6px 12px; }
+  .sender b { color: var(--ink); }
+  .note-tr { font-size: 11px; color: var(--muted); margin: -4px 0 0 12px; font-style: italic; }
+  .stars { color: #ffad33; letter-spacing: 1px; }
+
+  /* reminders-style process */
+  .todo { list-style: none; margin: 0; padding: 0; }
+  .todo li { display: grid; grid-template-columns: 26px 1fr; gap: 10px; padding: 12px 0; border-bottom: .5px solid var(--line); }
+  .todo li:last-child { border: 0; }
+  .todo .tick { width: 20px; height: 20px; border-radius: 50%; border: 2px solid var(--pink); margin-top: 1px; display: grid; place-items: center; color: #fff; font-size: 11px; }
+  .todo li.done .tick { background: var(--pink); }
+  .todo b { display: block; font-size: 14px; }
+  .todo p { margin: 2px 0 0; color: var(--muted); font-size: 13px; }
+
+  /* mail compose */
+  .mail .row { display: flex; gap: 8px; padding: 8px 0; border-bottom: .5px solid var(--line); font-size: 13px; }
+  .mail .row span:first-child { color: var(--muted); width: 64px; flex: none; }
+  .mail .msg { padding: 14px 0; min-height: 90px; color: var(--muted); }
+  .mail .actions { display: flex; flex-wrap: wrap; gap: 8px; }
+  .btn {
+    display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 8px; font-weight: 600; font-size: 13px;
+    text-decoration: none; color: var(--ink); background: #fff; box-shadow: 0 0 0 .5px rgba(120,50,80,.25), 0 1px 2px rgba(120,50,80,.12); cursor: pointer; border: 0;
+  }
+  .btn.primary { background: linear-gradient(#ff7fb6, #ea4f97); color: #fff; box-shadow: 0 1px 2px rgba(200,40,110,.4), inset 0 1px 0 rgba(255,255,255,.3); }
+  .btn:hover { filter: brightness(1.04); }
+
+  /* sticky note */
+  .note {
+    width: 270px; background: linear-gradient(#fff3a8, #ffe98a); border-radius: 4px; box-shadow: 0 14px 30px -10px rgba(150,90,20,.45);
+    font-family: "Patrick Hand", "Segoe Print", "Bradley Hand", cursive; font-size: 17px; line-height: 1.3; color: #5a3b14; max-height: none; animation: none;
+    -webkit-backdrop-filter: none; backdrop-filter: none;
+  }
+  .note .titlebar { height: 22px; background: rgba(0,0,0,.04); border: 0; }
+  .note .body { padding: 10px 18px 16px; }
+  .note p { text-align: left !important; margin: 0 0 8px; }
+  .note .nw { white-space: nowrap; }
+  .note .hl { background: rgba(255,143,191,.45); padding: 0 3px; border-radius: 3px; }
+
+  /* music player */
+  .music { width: 270px; }
+  .music .titlebar { height: 30px; font-size: 12px; }
+  .music .body { padding: 14px 16px 16px; }
+  .player { display: grid; grid-template-columns: 64px 1fr; gap: 12px; align-items: center; }
+  .cover { width: 64px; height: 64px; border-radius: 10px; display: grid; place-items: center; font-size: 28px; box-shadow: 0 6px 16px rgba(160,50,100,.3); transition: background .4s; }
+  .track { min-width: 0; }
+  .track b { display: block; font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .track span { display: block; font-size: 12px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .eq { display: inline-flex; gap: 2px; align-items: flex-end; height: 12px; margin-top: 6px; }
+  .eq i { width: 3px; height: 3px; background: var(--pink-deep); border-radius: 2px; }
+  .playing .eq i { animation: eq .9s ease-in-out infinite alternate; }
+  .playing .eq i:nth-child(2) { animation-delay: -.3s; } .playing .eq i:nth-child(3) { animation-delay: -.6s; } .playing .eq i:nth-child(4) { animation-delay: -.15s; }
+  @keyframes eq { from { height: 3px; } to { height: 12px; } }
+  .bar { margin-top: 14px; height: 5px; border-radius: 3px; background: rgba(232,85,154,.18); overflow: hidden; cursor: pointer; }
+  .bar i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, #ff9fc8, #e8559a); border-radius: 3px; }
+  .times { display: flex; justify-content: space-between; font-size: 11px; color: var(--muted); margin-top: 4px; font-variant-numeric: tabular-nums; }
+  .controls { display: flex; align-items: center; justify-content: center; gap: 18px; margin-top: 6px; }
+  .controls button { border: 0; background: none; cursor: pointer; font-size: 18px; color: var(--ink); width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; }
+  .controls button:hover { background: rgba(232,85,154,.12); }
+  .controls .pp { width: 42px; height: 42px; background: linear-gradient(#ff8fbf, #e8559a); color: #fff; font-size: 16px; box-shadow: 0 4px 12px rgba(232,85,154,.4); }
+  .controls .pp:hover { background: linear-gradient(#ff8fbf, #e8559a); filter: brightness(1.05); }
+  .vol { display: flex; align-items: center; gap: 8px; margin-top: 8px; font-size: 12px; color: var(--muted); }
+  .vol input { flex: 1; accent-color: var(--pink-deep); }
+  .queue { list-style: none; margin: 12px 0 0; padding: 10px 0 0; border-top: .5px solid var(--line); font-size: 12px; }
+  .queue li { display: flex; justify-content: space-between; gap: 8px; padding: 4px 6px; border-radius: 6px; cursor: pointer; }
+  .queue li:hover { background: rgba(232,85,154,.08); }
+  .queue li.on { color: var(--pink-deep); font-weight: 600; }
+  .queue li span:last-child { color: var(--muted); font-variant-numeric: tabular-nums; }
+
+  /* preview window */
+  .preview .body { padding: 0; background: #2a1b22; }
+  .preview img { width: 100%; height: auto; }
+
+  /* dock */
+  .dock {
+    position: fixed; left: 50%; bottom: 10px; transform: translateX(-50%); z-index: 900;
+    display: flex; align-items: flex-end; gap: 8px; padding: 8px 10px 6px; border-radius: 22px;
+    background: rgba(255,240,247,.5); -webkit-backdrop-filter: blur(24px) saturate(180%); backdrop-filter: blur(24px) saturate(180%);
+    box-shadow: 0 0 0 .5px rgba(255,255,255,.7) inset, 0 0 0 .5px rgba(120,50,80,.2), 0 10px 30px -8px rgba(150,40,90,.35);
+  }
+  .dock a, .dock button {
+    position: relative; width: 50px; height: 50px; border-radius: 13px; border: 0; padding: 0; display: grid; place-items: center;
+    font-size: 26px; text-decoration: none; cursor: default; transition: transform .18s cubic-bezier(.2,.9,.3,1.3); transform-origin: bottom;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.55), 0 2px 6px rgba(120,40,80,.25); color: #fff; font-weight: 800;
+  }
+  .dock a:hover, .dock button:hover { transform: translateY(-8px) scale(1.25); }
+  .dock .sep { width: 1px; align-self: stretch; margin: 4px 2px 8px; background: rgba(120,50,80,.25); }
+  .dock .dot { position: absolute; bottom: -6px; left: 50%; width: 4px; height: 4px; margin-left: -2px; border-radius: 50%; background: var(--ink); opacity: 0; }
+  .dock .running .dot { opacity: .7; }
+  .dock [data-tip]::after {
+    content: attr(data-tip); position: absolute; bottom: calc(100% + 12px); left: 50%; transform: translateX(-50%);
+    background: rgba(255,245,250,.95); color: var(--ink); font: 500 12px/1 -apple-system, Inter, sans-serif; padding: 6px 10px; border-radius: 6px;
+    box-shadow: 0 0 0 .5px var(--line), 0 4px 12px rgba(120,40,80,.2); white-space: nowrap; opacity: 0; pointer-events: none; transition: opacity .12s;
+  }
+  .dock [data-tip]:hover::after { opacity: 1; }
+  .g1 { background: linear-gradient(#ffb3d4, #f2679f); } .g2 { background: linear-gradient(#d9c2ff, #a77bf2); }
+  .g3 { background: linear-gradient(#ffd6a8, #ff9b6a); } .g4 { background: linear-gradient(#b6ecff, #5fb4f0); }
+  .g5 { background: linear-gradient(#c8f5c8, #4fc768); } .g6 { background: linear-gradient(#fff, #f3e3ea); color: var(--ink) !important; }
+  .g7 { background: linear-gradient(#4f9df5, #0a66c2); font-size: 20px !important; } .g8 { background: linear-gradient(#ff8fbf, #e8559a); font-size: 17px !important; }
+  .g9 { background: linear-gradient(#6fdc82, #14a800); font-size: 18px !important; } .g10 { background: linear-gradient(#ff9fb8, #ff3b6b); }
+
+  /* phone: icons become a home screen, windows become sheets */
+  @media (max-width: 760px) {
+    body { overflow: auto; }
+    .menubar .menu, .menubar .app, .menubar .np { display: none; }
+    .desktop { position: relative; inset: auto; padding: 44px 14px 120px; min-height: 100dvh; display: flex; flex-direction: column; gap: 18px; }
+    .note, .music { position: static !important; width: auto; }
+    .note { order: -2; }
+    .music { order: 1; display: flex !important; }
+    .music .queue { display: none; }
+    .note .titlebar, .music .titlebar { display: none; }
+    .icons { position: static; width: auto; grid-template-columns: repeat(4, 1fr); gap: 10px 4px; }
+    .window:not(.note):not(.music) {
+      position: fixed !important; left: 8px !important; right: 8px; top: 38px !important; bottom: 88px; width: auto !important; max-width: none; max-height: none;
+      z-index: 950 !important;
+    }
+    .titlebar { cursor: default; }
+    .about { grid-template-columns: 1fr; }
+    .about img { width: 120px; height: 140px; }
+    .facts { grid-template-columns: repeat(2, 1fr); }
+    .finder { grid-template-columns: 1fr; }
+    .finder .side { display: none; }
+    .dock { gap: 6px; padding: 6px 8px 5px; max-width: calc(100vw - 16px); }
+    .dock a, .dock button { width: 42px; height: 42px; font-size: 22px; border-radius: 11px; }
+    .dock a:hover, .dock button:hover { transform: none; }
+    .dock .hide-sm { display: none; }
+    .dock [data-tip]::after { display: none; }
+  }
+</style>
+</head>
+<body>
+<div class="wallpaper" aria-hidden="true"><div class="glow"></div></div>
+
+<!-- shared folder artwork -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <linearGradient id="fg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#ffc6de"/><stop offset="1" stop-color="#f78fbd"/></linearGradient>
+    <linearGradient id="fb" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f7a3c8"/><stop offset="1" stop-color="#ee7fb0"/></linearGradient>
+    <symbol id="folder" viewBox="0 0 64 54">
+      <path d="M4 9a4 4 0 0 1 4-4h15c1.2 0 2.3.5 3 1.4L29 10h27a4 4 0 0 1 4 4v6H4z" fill="url(#fb)"/>
+      <rect x="2" y="15" width="60" height="37" rx="5" fill="url(#fg)"/>
+      <rect x="2" y="15" width="60" height="1.4" rx=".7" fill="#fff" fill-opacity=".6"/>
+    </symbol>
+  </defs>
+</svg>
+
+<header class="menubar">
+  <button class="logo" data-open="about" aria-label="About">🌸</button>
+  <button class="app" data-open="about">Yunan</button>
+  <button class="menu" data-open="about">about</button>
+  <button class="menu" data-open="services">services</button>
+  <button class="menu" data-open="creds">credentials</button>
+  <button class="menu" data-open="reviews">reviews</button>
+  <button class="menu" data-open="contact">contact</button>
+  <span class="spacer"></span>
+  <span class="np" id="np" hidden></span>
+  <span class="clock" id="clock"></span>
+</header>
+
+<main class="desktop" id="desktop">
+
+  <!-- sticky note -->
+  <section class="window note" id="w-note" aria-label="Note">
+    <div class="titlebar" data-drag></div>
+    <div class="body">
+      <p>hi! I'm Yunan, an EN ⇄ ID translator.</p>
+      <p><span class="nw"><span class="hl">8+ yrs</span> in customs &amp; trade</span> · <span class="nw"><span class="hl">C2</span> English</span> · <span class="nw"><span class="hl">5.0★</span> on Upwork</span></p>
+      <p>open a folder to look around, or tap ✉️ for a quote 💗</p>
+    </div>
+  </section>
+
+  <!-- music player -->
+  <section class="window music" id="w-music" aria-labelledby="t-music">
+    <div class="titlebar" data-drag><div class="lights"><button class="close" aria-label="Close">×</button><button class="min" aria-label="Minimise">−</button><button class="zoom" aria-label="Zoom" disabled>+</button></div><span id="t-music">music</span></div>
+    <div class="body" id="player">
+      <div class="player">
+        <div class="cover" id="cover">🌸</div>
+        <div class="track">
+          <b id="tt">lost in translation</b>
+          <span id="ta">Yunan &amp; the glossaries</span>
+          <span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        </div>
+      </div>
+      <div class="bar" id="bar" role="slider" aria-label="Seek" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" tabindex="0"><i id="fill"></i></div>
+      <div class="times"><span id="cur">0:00</span><span id="dur">1:30</span></div>
+      <div class="controls">
+        <button id="prev" aria-label="Previous track">⏮</button>
+        <button class="pp" id="pp" aria-label="Play">▶</button>
+        <button id="next" aria-label="Next track">⏭</button>
+      </div>
+      <label class="vol">🔈<input id="vol" type="range" min="0" max="100" value="45" aria-label="Volume">🔊</label>
+      <ol class="queue" id="queue"></ol>
+    </div>
+  </section>
+
+  <!-- desktop icons -->
+  <nav class="icons" aria-label="Folders">
+    <button class="icon" data-open="about"><span class="art"><svg><use href="#folder"/></svg><span class="em">👩🏻‍💻</span></span><span class="label">about me</span></button>
+    <button class="icon" data-open="services"><span class="art"><svg><use href="#folder"/></svg><span class="em">🌐</span></span><span class="label">specialisations</span></button>
+    <button class="icon" data-open="creds"><span class="art"><svg><use href="#folder"/></svg><span class="em">🎓</span></span><span class="label">credentials</span></button>
+    <button class="icon" data-open="reviews"><span class="art"><svg><use href="#folder"/></svg><span class="em">💌</span></span><span class="label">reviews</span></button>
+    <button class="icon" data-open="process"><span class="art"><svg><use href="#folder"/></svg><span class="em">✅</span></span><span class="label">how I work</span></button>
+    <button class="icon" data-open="contact"><span class="art"><svg><use href="#folder"/></svg><span class="em">✉️</span></span><span class="label">get a quote</span></button>
+    <button class="icon" data-open="photo"><span class="art thumb"><img src="photo.jpg" alt="" width="54" height="54"></span><span class="label">me.jpg</span></button>
+  </nav>
+
+  <!-- About -->
+  <section class="window" id="w-about" aria-labelledby="t-about" hidden>
+    <div class="titlebar" data-drag><div class="lights"><button class="close" aria-label="Close">×</button><button class="min" aria-label="Minimise">−</button><button class="zoom" aria-label="Zoom">+</button></div><span id="t-about">about me</span></div>
+    <div class="body">
+      <div class="about">
+        <img src="photo.jpg" alt="Portrait of Yunan Naufalia Hanantio" width="170" height="200">
+        <div>
+          <h1>Yunan Naufalia Hanantio</h1>
+          <p class="role">English ⇄ Indonesian translator · Jakarta</p>
+          <p>I translate customs, trade, tax, legal and business documents between English and Indonesian, getting the terminology right and keeping the text easy to read.</p>
+          <p>for more than eight years, I've worked with technical and regulatory language in customs and international trade, in both English and Indonesian: regulations, trade agreements, technical reports and day-to-day correspondence. so I know how these terms are actually used, not just what the dictionary (or your AI) says.</p>
+          <p>I also lead quality review of AI-generated content for an IT company in Europe, checking whether a text is accurate, consistent and natural before it reaches its readers.</p>
+          <p>that mix means I read every document the way both a subject specialist and an editor would.</p>
+          <div class="chips"><span class="chip">customs</span><span class="chip">trade</span><span class="chip">tax</span><span class="chip">legal</span><span class="chip">academic</span></div>
+        </div>
+      </div>
+      <div class="facts">
+        <div class="fact"><b>8+</b><span>years in customs &amp; trade</span></div>
+        <div class="fact"><b>EN⇄ID</b><span>both directions</span></div>
+        <div class="fact"><b>C2</b><span>EF SET English 80/100</span></div>
+        <div class="fact"><b>5.0★</b><span>Upwork rating</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Specialisations (Finder) -->
+  <section class="window" id="w-services" aria-labelledby="t-services" style="width:680px" hidden>
+    <div class="titlebar" data-drag><div class="lights"><button class="close" aria-label="Close">×</button><button class="min" aria-label="Minimise">−</button><button class="zoom" aria-label="Zoom">+</button></div><span id="t-services">specialisations</span></div>
+    <div class="finder">
+      <div class="side">
+        <small>favourites</small>
+        <div class="on">🌐 specialisations</div>
+        <div>🌸 services</div>
+        <div>🇬🇧 EN → ID</div>
+        <div>🇮🇩 ID → EN</div>
+      </div>
+      <div class="main">
+        <div class="specs">
+          <div class="spec"><span class="em">🚢</span><h3>customs &amp; trade</h3><p>customs valuation, tariff classification, rules of origin, trade agreements and import/export documents.</p></div>
+          <div class="spec"><span class="em">🧾</span><h3>tax &amp; finance</h3><p>tax regulations, tax-compliance research, financial statements and reports, with Indonesian tax terms used the way the law uses them.</p></div>
+          <div class="spec"><span class="em">⚖️</span><h3>legal &amp; regulatory</h3><p>contracts, regulations and policy texts, following Indonesian legal-drafting conventions and official regulation titles.</p></div>
+          <div class="spec"><span class="em">📊</span><h3>business &amp; e-commerce</h3><p>company and sustainability reports, corporate letters and e-commerce content for international readers.</p></div>
+          <div class="spec"><span class="em">🎓</span><h3>academic &amp; research</h3><p>thesis questionnaires, research instruments and abstracts, with translator's notes and a translator's statement on request.</p></div>
+          <div class="spec"><span class="em">✨</span><h3>AI content &amp; linguistic QA</h3><p>LLM output evaluation, MT post-editing and editorial guidelines for Indonesian and English content.</p></div>
+        </div>
+        <div class="services">
+          <b>services:</b>
+          <span class="chip">translation</span>
+          <span class="chip">editing &amp; proofreading</span>
+          <span class="chip">MT / AI post-editing</span>
+          <span class="chip">AI output evaluation</span>
+          <span class="chip">layout matched to the original</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Credentials (list view) -->
+  <section class="window" id="w-creds" aria-labelledby="t-creds" style="width:600px" hidden>
+    <div class="titlebar" data-drag><div class="lights"><button class="close" aria-label="Close">×</button><button class="min" aria-label="Minimise">−</button><button class="zoom" aria-label="Zoom">+</button></div><span id="t-creds">credentials</span></div>
+    <div class="body" style="padding:6px 8px 10px">
+      <table class="list">
+        <thead><tr><th></th><th>name</th><th></th></tr></thead>
+        <tbody>
+          <tr><td>🪪</td><td><b>Professional Member, Association of Indonesian Translators (HPI)</b><span class="sub">HPI-01-26-5793</span></td><td><a href="https://sihapei.hpi.or.id/anggota/HPI-01-26-5793" target="_blank" rel="noopener">verify ↗</a></td></tr>
+          <tr><td>🇬🇧</td><td><b>EF SET 80/100 · CEFR C2 Proficient</b><span class="sub">Writing 97 · Listening 83 · Reading 75</span></td><td><a href="https://cert.efset.org/Er9nXb" target="_blank" rel="noopener">view ↗</a></td></tr>
+          <tr><td>🎓</td><td><b>B.A. English Literature</b><span class="sub">Universitas Terbuka, 2022–2025 · GPA 3.76</span></td><td></td></tr>
+          <tr><td>📜</td><td><b>Diploma in English</b><span class="sub">Politeknik Negeri Bandung, 2013–2016 · GPA 3.80</span></td><td></td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- Reviews (Messages) -->
+  <section class="window" id="w-reviews" aria-labelledby="t-reviews" style="width:500px" hidden>
+    <div class="titlebar" data-drag><div class="lights"><button class="close" aria-label="Close">×</button><button class="min" aria-label="Minimise">−</button><button class="zoom" aria-label="Zoom">+</button></div><span id="t-reviews">reviews</span></div>
+    <div class="body">
+      <div class="chat">
+        <div class="when">thesis questionnaire · EN → ID · Oct 2026</div>
+        <p class="sender"><b>Priandhita Sukowidyanti Asmoro</b> · Universiti Kebangsaan Malaysia / Universitas Brawijaya</p>
+        <div class="bubble them">“if any of my friends need a tax-related translation, I'll recommend her. she helped me by giving detailed comments so I could re-check my instrument, so it wasn't just a literal translation. thank you!”</div>
+        <p class="note-tr">translated from Indonesian</p>
+        <div class="bubble me">so glad it helped, good luck with the research! 🌸</div>
+      </div>
+      <div class="chat">
+        <div class="when">Upwork · ID → EN translation · Feb–Apr 2025</div>
+        <p class="sender"><b>Upwork client</b> · <span class="stars" aria-label="5 out of 5 stars">★★★★★</span></p>
+        <div class="bubble them">“Yunan was very pleasant to work with. firstly the quality of her translations and general work was excellent. I never really received any requests for amendments based on what she had done, which is quite unusual as clients will often try to find something. also the quality of communication through Upwork and speed of work was very good. I will be using Yunan again in the future and wholeheartedly recommend her to others.”</div>
+        <div class="chips" style="margin:0 0 0 4px"><span class="chip">collaborative</span><span class="chip">committed to quality</span><span class="chip">clear communicator</span></div>
+        <div class="bubble me">thank you so much! 🌸</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How I work (Reminders) -->
+  <section class="window" id="w-process" aria-labelledby="t-process" style="width:440px" hidden>
+    <div class="titlebar" data-drag><div class="lights"><button class="close" aria-label="Close">×</button><button class="min" aria-label="Minimise">−</button><button class="zoom" aria-label="Zoom">+</button></div><span id="t-process">how I work</span></div>
+    <div class="body">
+      <h2 style="font-size:22px;color:var(--pink-deep);margin-bottom:4px">your project</h2>
+      <ul class="todo">
+        <li class="done"><span class="tick">✓</span><div><b>brief</b><p>send the file, your deadline and what it's for, plus any glossary or reference texts you already use.</p></div></li>
+        <li class="done"><span class="tick">✓</span><div><b>quote</b><p>a clear PDF quotation with the scope, fee and delivery date.</p></div></li>
+        <li><span class="tick"></span><div><b>terminology</b><p>key terms checked against official sources (regulations, government and international-organisation sites) and kept in a project glossary. your own glossary always comes first.</p></div></li>
+        <li><span class="tick"></span><div><b>translate &amp; QA</b><p>translated with a translation memory so terms stay consistent, then a separate QA pass for numbers, names, terminology and format.</p></div></li>
+        <li><span class="tick"></span><div><b>translator's notes</b><p>a review copy with my notes and questions as Word comments, so you can see the key choices and answer queries before the final file.</p></div></li>
+        <li><span class="tick"></span><div><b>deliver</b><p>a clean file in your original layout, with your feedback applied and one round of revisions included. a translator's statement is available on request.</p></div></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Contact (Mail) -->
+  <section class="window" id="w-contact" aria-labelledby="t-contact" style="width:520px" hidden>
+    <div class="titlebar" data-drag><div class="lights"><button class="close" aria-label="Close">×</button><button class="min" aria-label="Minimise">−</button><button class="zoom" aria-label="Zoom">+</button></div><span id="t-contact">new message</span></div>
+    <div class="body mail">
+      <div class="row"><span>to:</span><span>Yunan &lt;ynaufaliah@gmail.com&gt;</span></div>
+      <div class="row"><span>subject:</span><span>translation quote request</span></div>
+      <div class="msg">
+        <p>got a document? send the file and your deadline, and I'll reply with a quote, usually within a few hours. ♡</p>
+      </div>
+      <div class="actions">
+        <a class="btn primary" href="mailto:ynaufaliah@gmail.com?subject=translation%20quote%20request">✉️ request a quote</a>
+        <a class="btn" href="https://wa.me/6281312065877" target="_blank" rel="noopener">WhatsApp</a>
+        <a class="btn" href="https://www.linkedin.com/in/ynnnfl" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="btn" href="https://www.upwork.com/freelancers/~01e0012803e8ed7dcc" target="_blank" rel="noopener">Upwork</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Photo (Preview) -->
+  <section class="window preview" id="w-photo" aria-label="me.jpg" style="width:360px" hidden>
+    <div class="titlebar" data-drag><div class="lights"><button class="close" aria-label="Close">×</button><button class="min" aria-label="Minimise">−</button><button class="zoom" aria-label="Zoom">+</button></div><span>me.jpg</span></div>
+    <div class="body"><img src="photo.jpg" alt="Portrait of Yunan Naufalia Hanantio" width="600" height="600"></div>
+  </section>
+</main>
+
+<nav class="dock" aria-label="Dock">
+  <button class="g1" data-open="about" data-tip="about me" aria-label="About me">🌸<span class="dot"></span></button>
+  <button class="g2" data-open="services" data-tip="specialisations" aria-label="Specialisations">🌐<span class="dot"></span></button>
+  <button class="g3" data-open="creds" data-tip="credentials" aria-label="Credentials">🎓<span class="dot"></span></button>
+  <button class="g4 hide-sm" data-open="reviews" data-tip="reviews" aria-label="Reviews">💬<span class="dot"></span></button>
+  <button class="g5 hide-sm" data-open="process" data-tip="how I work" aria-label="How I work">✅<span class="dot"></span></button>
+  <button class="g10 hide-sm" data-open="music" data-tip="music" aria-label="Music">🎵<span class="dot"></span></button>
+  <button class="g6" data-open="contact" data-tip="mail" aria-label="Mail">✉️<span class="dot"></span></button>
+  <span class="sep"></span>
+  <a class="g9" href="https://wa.me/6281312065877" target="_blank" rel="noopener" data-tip="WhatsApp" aria-label="WhatsApp">💬</a>
+  <a class="g7" href="https://www.linkedin.com/in/ynnnfl" target="_blank" rel="noopener" data-tip="LinkedIn" aria-label="LinkedIn">in</a>
+  <a class="g8 hide-sm" href="https://www.upwork.com/freelancers/~01e0012803e8ed7dcc" target="_blank" rel="noopener" data-tip="Upwork" aria-label="Upwork">Up</a>
+</nav>
+
+<script>
+  (function () {
+    var desktop = document.getElementById("desktop");
+    var phone = matchMedia("(max-width: 760px)");
+
+    // menu-bar clock
+    var clock = document.getElementById("clock");
+    function tick() {
+      var d = new Date();
+      var day = d.toLocaleDateString("en-GB", { weekday: "short", day: "numeric", month: "short" });
+      var time = d.toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit" });
+      clock.textContent = phone.matches ? time : day + "  " + time;
+    }
+    tick(); setInterval(tick, 15000);
+    phone.addEventListener("change", tick);
+
+    // windows
+    var z = 10, opened = 0;
+    function win(id) { return document.getElementById("w-" + id); }
+    function isWidget(el) { return el.classList.contains("note") || el.classList.contains("music"); }
+    function focusWin(el) {
+      document.querySelectorAll(".window").forEach(function (w) { w.classList.toggle("inactive", w !== el); });
+      el.style.zIndex = ++z;
+    }
+    function place(el) {
+      if (el.dataset.placed || phone.matches) return;
+      var vw = innerWidth, vh = innerHeight - 30 - 100;
+      var w = Math.min(el.offsetWidth, vw - 32);
+      var x = Math.max(16, Math.min(vw - w - 140, Math.round(vw * 0.5 - w * 0.5 - 60 + (opened % 5) * 28)));
+      var y = Math.max(12, Math.min(vh - 200, 40 + (opened % 5) * 26));
+      el.style.left = x + "px"; el.style.top = y + "px";
+      el.dataset.placed = "1"; opened++;
+    }
+    function syncDock() {
+      document.querySelectorAll(".dock [data-open]").forEach(function (b) {
+        var w = win(b.dataset.open);
+        b.classList.toggle("running", !!w && !w.hidden);
+      });
+    }
+    function open(id) {
+      var el = win(id); if (!el) return;
+      if (phone.matches && !isWidget(el)) document.querySelectorAll(".window").forEach(function (w) { if (w !== el && !isWidget(w)) w.hidden = true; });
+      el.hidden = false; place(el); focusWin(el); syncDock();
+      if (phone.matches && isWidget(el)) el.scrollIntoView({ behavior: "smooth", block: "center" });
+    }
+    function shut(el) {
+      el.hidden = true; el.classList.remove("zoomed"); syncDock();
+      var top = null, best = -1;
+      document.querySelectorAll(".window:not([hidden])").forEach(function (w) { var zi = +w.style.zIndex || 0; if (zi > best) { best = zi; top = w; } });
+      if (top) focusWin(top);
+    }
+    document.querySelectorAll("[data-open]").forEach(function (b) {
+      b.addEventListener("click", function () {
+        document.querySelectorAll(".icon").forEach(function (i) { i.classList.toggle("sel", i === b); });
+        open(b.dataset.open);
+      });
+    });
+    document.querySelectorAll(".window").forEach(function (el) {
+      el.addEventListener("pointerdown", function () { focusWin(el); });
+      var c = el.querySelector(".close"), m = el.querySelector(".min"), zb = el.querySelector(".zoom");
+      if (c) c.addEventListener("click", function (e) { e.stopPropagation(); shut(el); });
+      if (m) m.addEventListener("click", function (e) { e.stopPropagation(); shut(el); });
+      if (zb) zb.addEventListener("click", function (e) { e.stopPropagation(); el.classList.toggle("zoomed"); });
+    });
+    document.addEventListener("keydown", function (e) {
+      if (e.key !== "Escape") return;
+      var top = null, best = -1;
+      document.querySelectorAll(".window:not([hidden])").forEach(function (w) { if (isWidget(w)) return; var zi = +w.style.zIndex || 0; if (zi > best) { best = zi; top = w; } });
+      if (top) shut(top);
+    });
+    desktop.addEventListener("pointerdown", function (e) {
+      if (e.target === desktop) document.querySelectorAll(".icon").forEach(function (i) { i.classList.remove("sel"); });
+    });
+
+    // drag by title bar (desktop only)
+    document.querySelectorAll("[data-drag]").forEach(function (bar) {
+      var el = bar.closest(".window"), sx, sy, ox, oy, dragging = false;
+      bar.addEventListener("pointerdown", function (e) {
+        if (phone.matches || e.target.closest(".lights") || el.classList.contains("zoomed")) return;
+        dragging = true; sx = e.clientX; sy = e.clientY; ox = el.offsetLeft; oy = el.offsetTop;
+        bar.setPointerCapture(e.pointerId);
+      });
+      bar.addEventListener("pointermove", function (e) {
+        if (!dragging) return;
+        var x = Math.max(-el.offsetWidth + 80, Math.min(innerWidth - 80, ox + e.clientX - sx));
+        var y = Math.max(0, Math.min(innerHeight - 30 - 60, oy + e.clientY - sy));
+        el.style.left = x + "px"; el.style.top = y + "px";
+      });
+      bar.addEventListener("pointerup", function () { dragging = false; });
+      bar.addEventListener("dblclick", function (e) {
+        var zb = el.querySelector(".zoom");
+        if (!e.target.closest(".lights") && zb && !zb.disabled) el.classList.toggle("zoomed");
+      });
+    });
+
+    // music player: dummy playlist with a soft synth so play actually makes a sound
+    var tracks = [
+      { t: "lost in translation", a: "Yunan & the glossaries", c: "🌸", g: "linear-gradient(135deg,#ffc2dc,#f2679f)", bpm: 84,
+        prog: [[60,64,67,71],[57,60,64,67],[53,57,60,64],[55,59,62,65]] },
+      { t: "soft deadline", a: "lo-fi linguist", c: "☕️", g: "linear-gradient(135deg,#ffe0c2,#ff9b6a)", bpm: 76,
+        prog: [[62,65,69,72],[55,59,62,65],[60,64,67,71],[57,60,64,69]] },
+      { t: "track changes", a: "the revisions", c: "📝", g: "linear-gradient(135deg,#e2d1ff,#a77bf2)", bpm: 92,
+        prog: [[65,69,72,76],[64,67,71,74],[62,65,69,72],[60,64,67,72]] },
+      { t: "source & target", a: "EN ⇄ ID", c: "💌", g: "linear-gradient(135deg,#c9f0ff,#5fb4f0)", bpm: 80,
+        prog: [[57,60,64,67],[53,57,60,65],[60,64,67,72],[55,59,62,67]] },
+      { t: "glossary lullaby", a: "term base", c: "🌙", g: "linear-gradient(135deg,#ffd6e7,#c77dff)", bpm: 68,
+        prog: [[64,67,71,74],[60,64,67,71],[57,60,64,67],[59,62,66,69]] }
+    ];
+    var LEN = 90; // seconds per track
+    var cur = 0, pos = 0, playing = false, ctx = null, master = null, timer = null, step = 0, lastT = 0;
+    var $ = function (id) { return document.getElementById(id); };
+    var queue = $("queue");
+    tracks.forEach(function (tr, i) {
+      var li = document.createElement("li");
+      li.innerHTML = "<span></span><span>1:30</span>";
+      li.firstChild.textContent = tr.c + "  " + tr.t;
+      li.addEventListener("click", function () { load(i); play(); });
+      queue.appendChild(li);
+    });
+    function fmt(s) { s = Math.floor(s); return Math.floor(s / 60) + ":" + String(s % 60).padStart(2, "0"); }
+    function render() {
+      var tr = tracks[cur];
+      $("tt").textContent = tr.t; $("ta").textContent = tr.a;
+      $("cover").textContent = tr.c; $("cover").style.background = tr.g;
+      $("fill").style.width = (pos / LEN * 100) + "%";
+      $("bar").setAttribute("aria-valuenow", Math.round(pos / LEN * 100));
+      $("cur").textContent = fmt(pos); $("dur").textContent = fmt(LEN);
+      [].forEach.call(queue.children, function (li, i) { li.classList.toggle("on", i === cur); });
+      $("pp").textContent = playing ? "❚❚" : "▶";
+      $("pp").setAttribute("aria-label", playing ? "Pause" : "Play");
+      $("player").classList.toggle("playing", playing);
+      var np = $("np"); np.hidden = !playing; np.textContent = "♫ " + tr.t + " — " + tr.a;
+    }
+    function midi(n) { return 440 * Math.pow(2, (n - 69) / 12); }
+    function note(freq, when, dur, vol, type) {
+      var o = ctx.createOscillator(), g = ctx.createGain();
+      o.type = type; o.frequency.value = freq;
+      g.gain.setValueAtTime(0, when);
+      g.gain.linearRampToValueAtTime(vol, when + 0.02);
+      g.gain.exponentialRampToValueAtTime(0.0001, when + dur);
+      o.connect(g); g.connect(master); o.start(when); o.stop(when + dur + 0.05);
+    }
+    function beat() {
+      var tr = tracks[cur], eighth = 60 / tr.bpm / 2;
+      var chord = tr.prog[Math.floor(step / 8) % tr.prog.length];
+      var t = ctx.currentTime + 0.05;
+      var pattern = [0, 1, 2, 3, 2, 1, 2, 3];
+      note(midi(chord[pattern[step % 8]] + 12), t, eighth * 2.2, 0.09, "triangle");
+      if (step % 8 === 0) { note(midi(chord[0] - 12), t, eighth * 7, 0.12, "sine"); chord.forEach(function (n) { note(midi(n), t, eighth * 7, 0.025, "sine"); }); }
+      step++;
+      var now = performance.now(); pos += (now - lastT) / 1000; lastT = now;
+      if (pos >= LEN) { load((cur + 1) % tracks.length); start(); return; }
+      render();
+      timer = setTimeout(beat, eighth * 1000);
+    }
+    function start() { clearTimeout(timer); lastT = performance.now(); beat(); }
+    function play() {
+      try {
+        if (!ctx) {
+          ctx = new (window.AudioContext || window.webkitAudioContext)();
+          var lp = ctx.createBiquadFilter(); lp.type = "lowpass"; lp.frequency.value = 2200;
+          master = ctx.createGain(); master.gain.value = $("vol").value / 100 * 0.6;
+          master.connect(lp); lp.connect(ctx.destination);
+        }
+        ctx.resume();
+      } catch (e) { ctx = null; }
+      playing = true; render();
+      if (ctx) start(); else fakeTick();
+    }
+    function fakeTick() { // no Web Audio: still move the progress bar
+      clearTimeout(timer); lastT = performance.now();
+      (function loop() { if (!playing) return; var now = performance.now(); pos += (now - lastT) / 1000; lastT = now;
+        if (pos >= LEN) { load((cur + 1) % tracks.length); }
+        render(); timer = setTimeout(loop, 250); })();
+    }
+    function pause() { playing = false; clearTimeout(timer); render(); }
+    function load(i) { cur = (i + tracks.length) % tracks.length; pos = 0; step = 0; render(); }
+    $("pp").addEventListener("click", function () { playing ? pause() : play(); });
+    $("next").addEventListener("click", function () { load(cur + 1); if (playing) start(); });
+    $("prev").addEventListener("click", function () { if (pos > 3) { pos = 0; step = 0; render(); } else load(cur - 1); if (playing) start(); });
+    $("vol").addEventListener("input", function () { if (master) master.gain.value = this.value / 100 * 0.6; });
+    $("bar").addEventListener("click", function (e) { var r = this.getBoundingClientRect(); pos = Math.max(0, Math.min(LEN - 1, (e.clientX - r.left) / r.width * LEN)); render(); });
+    $("bar").addEventListener("keydown", function (e) {
+      if (e.key === "ArrowRight") pos = Math.min(LEN - 1, pos + 5); else if (e.key === "ArrowLeft") pos = Math.max(0, pos - 5); else return;
+      e.preventDefault(); render();
+    });
+    render();
+
+    // start-up layout
+    if (!phone.matches) {
+      var sticky = win("note"), music = win("music");
+      // one column just left of the folder icons: note level with the first icon,
+      // player's bottom level with the last one (but never down onto the dock)
+      var icons = document.querySelector(".icons");
+      var nx = Math.max(16, innerWidth - 118 - 24 - sticky.offsetWidth);
+      sticky.style.left = music.style.left = nx + "px"; sticky.style.top = (icons.offsetTop + 6) + "px";
+      sticky.dataset.placed = music.dataset.placed = "1";
+      var stack = function () {
+        var min = sticky.offsetTop + sticky.offsetHeight + 22;
+        var bottom = Math.min(icons.offsetTop + icons.offsetHeight - 6, innerHeight - 30 - 96);
+        music.style.top = Math.max(min, bottom - music.offsetHeight) + "px";
+        return music.style.top;
+      };
+      var stacked = stack();
+      if (document.fonts) document.fonts.ready.then(function () { if (music.style.top === stacked) stack(); });
+      var about = win("about");
+      about.hidden = false;
+      about.style.left = Math.max(16, Math.round(innerWidth * 0.06)) + "px";
+      about.style.top = "34px"; about.dataset.placed = "1"; opened = 1;
+      focusWin(about);
+    }
+    syncDock();
+  })();
+</script>
+</body>
+</html>
