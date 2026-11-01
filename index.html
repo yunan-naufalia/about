@@ -129,9 +129,8 @@
   .finder { display: grid; grid-template-columns: 150px 1fr; min-height: 0; flex: 1; overflow: hidden; }
   .finder .side { background: rgba(255,228,240,.7); padding: 14px 10px; border-right: .5px solid var(--line); font-size: 13px; }
   .finder .side small { display: block; font-size: 11px; font-weight: 600; color: var(--muted); padding: 0 8px 6px; }
-  .finder .side div { padding: 4px 8px; border-radius: 6px; }
-  .finder .side div.on { background: rgba(232,85,154,.16); font-weight: 600; }
   .finder .main { padding: 18px; overflow: auto; }
+  #w-services .finder { grid-template-columns: 1fr; }
   .specs { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 12px; }
   .spec { background: #fff; border-radius: 12px; padding: 14px; box-shadow: 0 0 0 .5px var(--line); }
   .spec .em { font-size: 26px; display: block; margin-bottom: 6px; }
@@ -268,6 +267,8 @@
   .pair { display: grid; grid-template-columns: 1fr 1fr; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 0 0 .5px var(--line); margin-top: 12px; user-select: text; -webkit-user-select: text; }
   .pair > div { padding: 12px 14px; line-height: 1.4; font-weight: 500; }
   .pair small { display: block; font-size: 11px; font-weight: 600; color: var(--muted); margin-bottom: 4px; }
+  .pair.excerpt > div { font-weight: 400; font-size: 13.5px; line-height: 1.5; }
+  .pair.excerpt span { display: block; text-align: justify; hyphens: auto; -webkit-hyphens: auto; }
   .pair .side-en { background: rgba(255,214,231,.3); }
   .pair p.tn { grid-column: 1 / -1; margin: 0; padding: 10px 14px 12px; font-size: 12.5px; color: var(--muted); border-top: .5px solid var(--line); }
   .pair .tn b { color: var(--pink-deep); margin-right: 4px; }
@@ -421,13 +422,6 @@
   <section class="window" id="w-services" aria-labelledby="t-services" style="width:680px" hidden>
     <div class="titlebar" data-drag><div class="lights"><button class="close" aria-label="Close">×</button><button class="min" aria-label="Minimize">−</button><button class="zoom" aria-label="Zoom">+</button></div><span id="t-services">specializations</span></div>
     <div class="finder">
-      <div class="side">
-        <small>favorites</small>
-        <div class="on">🌐 specializations</div>
-        <div>🌸 services</div>
-        <div>🇬🇧 EN → ID</div>
-        <div>🇮🇩 ID → EN</div>
-      </div>
       <div class="main">
         <div class="specs">
           <div class="spec"><span class="em">🚢</span><h3>customs &amp; trade</h3><p>customs valuation, tariff classification, rules of origin, trade agreements and import/export documents.</p></div>
@@ -461,26 +455,26 @@
       <div class="main">
         <div class="pane" id="s-customs" role="tabpanel">
       <h2 style="font-size:22px;color:var(--pink-deep);margin-bottom:6px">Customs Valuation Regulation · ID → EN</h2>
-      <p class="sample-intro">My own translation of Indonesia's Regulation Number 144/PMK.04/2022 on Customs Value for the Calculation of Import Duty, with 38 translator's notes. Here are four key terms from it.</p>
-        <div class="pair">
-          <div class="side-id"><small>Indonesian (source)</small><span lang="id">Nilai pabean</span></div>
-          <div class="side-en"><small>English (translation)</small><span>Customs value</span></div>
+      <p class="sample-intro">My own translation of Indonesia's Regulation Number 144/PMK.04/2022 on Customs Value for the Calculation of Import Duty, with 38 translator's notes. Here are four excerpts from it.</p>
+        <div class="pair excerpt">
+          <div class="side-id"><small>Indonesian (source) · Article 2(1)</small><span lang="id">Nilai pabean untuk penghitungan Bea Masuk merupakan nilai transaksi dari barang impor yang bersangkutan yang memenuhi syarat tertentu.</span></div>
+          <div class="side-en"><small>English (translation)</small><span>The customs value for the calculation of Import Duty shall be the transaction value of the imported goods provided that certain conditions are met.</span></div>
           <p class="tn"><b>Translator's note</b> “Nilai pabean” is rendered “customs value,” following Article 15.1(a) of the WTO Customs Valuation Agreement (CVA). The term isn’t defined in Article 1 of the regulation and is written in lowercase throughout.</p>
         </div>
-        <div class="pair">
-          <div class="side-id"><small>Indonesian (source)</small><span lang="id">Daerah Pabean</span></div>
-          <div class="side-en"><small>English (translation)</small><span>Customs Territory</span></div>
-          <p class="tn"><b>Translator's note</b> “Daerah Pabean” is rendered “Customs Territory,” following CVA usage. The Indonesian Customs Territory also includes certain places in the Exclusive Economic Zone and on the Continental Shelf.</p>
+        <div class="pair excerpt">
+          <div class="side-id"><small>Indonesian (source) · Article 1, item 1</small><span lang="id">Daerah Pabean adalah wilayah Republik Indonesia yang meliputi wilayah darat, perairan dan ruang udara di atasnya, serta tempat-tempat tertentu di Zona Ekonomi Eksklusif dan landas kontinen yang di dalamnya berlaku ketentuan peraturan perundang-undangan di bidang Kepabeanan.</span></div>
+          <div class="side-en"><small>English (translation)</small><span>Customs Territory means the territory of the Republic of Indonesia which includes land, waters and air space above it, as well as certain places in the Exclusive Economic Zone and the Continental Shelf to which the Customs Law applies.</span></div>
+          <p class="tn"><b>Translator's note</b> “Daerah Pabean” is rendered “Customs Territory,” following CVA usage.</p>
         </div>
-        <div class="pair">
-          <div class="side-id"><small>Indonesian (source)</small><span lang="id">Orang Saling Berhubungan</span></div>
-          <div class="side-en"><small>English (translation)</small><span>Related Persons</span></div>
-          <p class="tn"><b>Translator's note</b> “Orang Saling Berhubungan” is rendered “Related Persons,” following Article 15.4 of the CVA. The annexes use a different expression, “pihak yang Berhubungan,” rendered “related parties.”</p>
+        <div class="pair excerpt">
+          <div class="side-id"><small>Indonesian (source) · Article 1, item 3(d)</small><span lang="id">mereka yang salah satu diantaranya secara langsung atau tidak langsung memiliki, mengendalikan, atau memegang 5% (lima persen) atau lebih saham yang beredar dari salah satu dari mereka;</span></div>
+          <div class="side-en"><small>English (translation)</small><span>persons where any person directly or indirectly owns, controls, or holds 5 (five) per cent or more of the outstanding shares of both of them;</span></div>
+          <p class="tn"><b>Translator's note</b> The literal wording doesn’t make clear whose shares are held. The English follows Article 15.4(d) of the CVA (“any person … of both of them”) for the ownership test, but keeps the Indonesian text’s “shares” where the CVA says “voting stock or shares.”</p>
         </div>
-        <div class="pair">
-          <div class="side-id"><small>Indonesian (source)</small><span lang="id">Pemilik Barang</span></div>
-          <div class="side-en"><small>English (translation)</small><span>Owner of Goods</span></div>
-          <p class="tn"><b>Translator's note</b> “Pemilik Barang” is a domestic defined term with no CVA equivalent. It covers the importer and any person on whose behalf the importer imports the goods.</p>
+        <div class="pair excerpt">
+          <div class="side-id"><small>Indonesian (source) · Article 1, item 5</small><span lang="id">Pemilik Barang adalah Importir atau Orang yang meminta Importir mengimpor barang untuk dan atas kepentingannya dan diberitahukan dalam pemberitahuan pabean impor.</span></div>
+          <div class="side-en"><small>English (translation)</small><span>Owner of Goods means an Importer or a Person who requests an Importer to import goods on their behalf and in their interest, as declared in the import declaration.</span></div>
+          <p class="tn"><b>Translator's note</b> “Pemilik Barang” is a domestic defined term with no CVA equivalent, so it’s rendered descriptively.</p>
         </div>
         </div>
         <div class="pane" id="s-report" role="tabpanel" hidden>
