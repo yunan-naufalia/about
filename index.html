@@ -259,12 +259,17 @@
   .g11 { background: radial-gradient(circle at 30% 110%, #fdd36b 0%, #fa7e3c 30%, #e1306c 60%, #b33ab4 85%, #7a3ff0 100%); }
 
   /* samples: side-by-side extracts */
+  .pane p { margin: 0 0 12px; text-align: justify; hyphens: auto; -webkit-hyphens: auto; }
   .sample-intro { color: var(--muted); }
+  #w-samples .finder { grid-template-columns: 186px 1fr; }
+  .sample-tabs button { display: block; width: 100%; padding: 4px 8px; border: 0; border-radius: 6px; background: none; text-align: left; cursor: default; }
+  .sample-tabs button:hover { background: rgba(232,85,154,.08); }
+  .sample-tabs button[aria-selected="true"] { background: rgba(232,85,154,.16); font-weight: 600; }
   .pair { display: grid; grid-template-columns: 1fr 1fr; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 0 0 .5px var(--line); margin-top: 12px; user-select: text; -webkit-user-select: text; }
   .pair > div { padding: 12px 14px; line-height: 1.4; font-weight: 500; }
   .pair small { display: block; font-size: 11px; font-weight: 600; color: var(--muted); margin-bottom: 4px; }
   .pair .side-en { background: rgba(255,214,231,.3); }
-  .body .pair .tn { grid-column: 1 / -1; margin: 0; padding: 10px 14px 12px; font-size: 12.5px; color: var(--muted); border-top: .5px solid var(--line); }
+  .pair p.tn { grid-column: 1 / -1; margin: 0; padding: 10px 14px 12px; font-size: 12.5px; color: var(--muted); border-top: .5px solid var(--line); }
   .pair .tn b { color: var(--pink-deep); margin-right: 4px; }
 
   /* short desktop screens: tighten the icons so all eight fit */
@@ -292,6 +297,10 @@
     }
     .titlebar { cursor: default; }
     .pair { grid-template-columns: 1fr; }
+    #w-samples .finder { grid-template-columns: 1fr; grid-template-rows: auto minmax(0, 1fr); }
+    .finder .side.sample-tabs { display: flex; gap: 6px; overflow-x: auto; padding: 8px 10px; border-right: 0; border-bottom: .5px solid var(--line); }
+    .finder .side.sample-tabs small { display: none; }
+    .sample-tabs button { flex: none; width: auto; padding: 4px 7px; font-size: 12.5px; white-space: nowrap; }
     .about { grid-template-columns: 1fr; }
     .about img { width: 120px; height: 140px; }
     .facts { grid-template-columns: repeat(2, 1fr); }
@@ -441,9 +450,40 @@
   </section>
 
   <!-- Samples -->
-  <section class="window" id="w-samples" aria-labelledby="t-samples" style="width:640px" hidden>
+  <section class="window" id="w-samples" aria-labelledby="t-samples" style="width:760px" hidden>
     <div class="titlebar" data-drag><div class="lights"><button class="close" aria-label="Close">×</button><button class="min" aria-label="Minimize">−</button><button class="zoom" aria-label="Zoom">+</button></div><span id="t-samples">samples</span></div>
-    <div class="body">
+    <div class="finder">
+      <div class="side sample-tabs" role="tablist" aria-label="Samples">
+        <small>samples</small>
+        <button role="tab" aria-selected="true" aria-controls="s-customs">🚢 Customs regulation</button>
+        <button role="tab" aria-selected="false" aria-controls="s-report">📊 Sustainability report</button>
+      </div>
+      <div class="main">
+        <div class="pane" id="s-customs" role="tabpanel">
+      <h2 style="font-size:22px;color:var(--pink-deep);margin-bottom:6px">Customs Valuation Regulation · ID → EN</h2>
+      <p class="sample-intro">My own translation of Indonesia's Regulation Number 144/PMK.04/2022 on Customs Value for the Calculation of Import Duty, with 38 translator's notes. Here are four key terms from it.</p>
+        <div class="pair">
+          <div class="side-id"><small>Indonesian (source)</small><span lang="id">Nilai pabean</span></div>
+          <div class="side-en"><small>English (translation)</small><span>Customs value</span></div>
+          <p class="tn"><b>Translator's note</b> “Nilai pabean” is rendered “customs value,” following Article 15.1(a) of the WTO Customs Valuation Agreement (CVA). The term isn’t defined in Article 1 of the regulation and is written in lowercase throughout.</p>
+        </div>
+        <div class="pair">
+          <div class="side-id"><small>Indonesian (source)</small><span lang="id">Daerah Pabean</span></div>
+          <div class="side-en"><small>English (translation)</small><span>Customs Territory</span></div>
+          <p class="tn"><b>Translator's note</b> “Daerah Pabean” is rendered “Customs Territory,” following CVA usage. The Indonesian Customs Territory also includes certain places in the Exclusive Economic Zone and on the Continental Shelf.</p>
+        </div>
+        <div class="pair">
+          <div class="side-id"><small>Indonesian (source)</small><span lang="id">Orang Saling Berhubungan</span></div>
+          <div class="side-en"><small>English (translation)</small><span>Related Persons</span></div>
+          <p class="tn"><b>Translator's note</b> “Orang Saling Berhubungan” is rendered “Related Persons,” following Article 15.4 of the CVA. The annexes use a different expression, “pihak yang Berhubungan,” rendered “related parties.”</p>
+        </div>
+        <div class="pair">
+          <div class="side-id"><small>Indonesian (source)</small><span lang="id">Pemilik Barang</span></div>
+          <div class="side-en"><small>English (translation)</small><span>Owner of Goods</span></div>
+          <p class="tn"><b>Translator's note</b> “Pemilik Barang” is a domestic defined term with no CVA equivalent. It covers the importer and any person on whose behalf the importer imports the goods.</p>
+        </div>
+        </div>
+        <div class="pane" id="s-report" role="tabpanel" hidden>
       <h2 style="font-size:22px;color:var(--pink-deep);margin-bottom:6px">Sustainability Report · ID → EN</h2>
       <p class="sample-intro">A self-initiated translation of the President Director's message in AIA Indonesia's 2024 sustainability report, with 23 translator's notes. It wasn't commissioned by AIA, and I'm not affiliated with the company. Here are four short extracts.</p>
         <div class="pair">
@@ -466,6 +506,8 @@
           <div class="side-en"><small>English (translation)</small><span>The Board of Directors takes an active role in formulating strategy</span></div>
           <p class="tn"><b>Translator's note</b> Indonesian companies have a two-tier board: the Direksi (executive management) is separate from the Dewan Komisaris (the supervisory Board of Commissioners).</p>
         </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -660,6 +702,18 @@
       bar.addEventListener("dblclick", function (e) {
         var zb = el.querySelector(".zoom");
         if (!e.target.closest(".lights") && zb && !zb.disabled) el.classList.toggle("zoomed");
+      });
+    });
+
+    // samples: sidebar on desktop, tabs on phone
+    var sampleTabs = document.querySelectorAll(".sample-tabs button");
+    sampleTabs.forEach(function (tab) {
+      tab.addEventListener("click", function () {
+        sampleTabs.forEach(function (t) {
+          t.setAttribute("aria-selected", t === tab);
+          document.getElementById(t.getAttribute("aria-controls")).hidden = t !== tab;
+        });
+        document.querySelector("#w-samples .main").scrollTop = 0;
       });
     });
 
