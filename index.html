@@ -9,6 +9,7 @@
 <meta property="og:description" content="customs, trade, tax, legal, and business translation between English and Indonesian.">
 <meta property="og:image" content="photo.jpg">
 <meta name="theme-color" content="#ffd6e7">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🌸%3C/text%3E%3C/svg%3E">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -257,6 +258,7 @@
   .g5 { background: linear-gradient(#c8f5c8, #4fc768); } .g6 { background: linear-gradient(#fff, #f3e3ea); color: var(--ink) !important; }
   .g7 { background: linear-gradient(#4f9df5, #0a66c2); font-size: 20px !important; } .g8 { background: linear-gradient(#ff8fbf, #e8559a); font-size: 17px !important; }
   .g9 { background: linear-gradient(#61fd7d, #25cf43); } .g10 { background: linear-gradient(#ff9fb8, #ff3b6b); }
+  .g13 { background: linear-gradient(#f4eef1, #d9cdd3); }
   .g12 { background: linear-gradient(#fff3a8, #ffd25e); }
   .g11 { background: radial-gradient(circle at 30% 110%, #fdd36b 0%, #fa7e3c 30%, #e1306c 60%, #b33ab4 85%, #7a3ff0 100%); }
 
@@ -300,6 +302,32 @@
   .tr-verdict { display: flex; justify-content: space-between; align-items: center; gap: 8px; margin-top: 10px; padding-top: 8px; border-top: .5px solid var(--line); }
   .tr-verdict span { font-size: 11px; font-weight: 600; color: var(--muted); }
   .tr-verdict b { color: var(--pink-deep); }
+
+  /* trash: rejected literal translations */
+  .trash-intro { color: var(--muted); }
+  .trash { list-style: none; margin: 0; padding: 0; }
+  .trash li { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; align-items: baseline; padding: 8px 0; border-bottom: .5px solid var(--line); font-size: 13px; }
+  .trash li span { font-weight: 600; }
+  .trash li s { color: var(--muted); text-decoration-color: var(--pink-deep); }
+  .trash li b { font-weight: 500; color: var(--pink-deep); }
+  .trash-foot { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-top: 12px; font-size: 12px; color: var(--muted); }
+
+  /* cute scrollbars */
+  ::-webkit-scrollbar { width: 10px; height: 8px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: linear-gradient(#ffb3d4, #f07cb0); border: 2px solid transparent; border-radius: 999px; background-clip: padding-box; }
+  ::-webkit-scrollbar-thumb:hover { background: linear-gradient(#ff8fbf, #e8559a); border: 2px solid transparent; background-clip: padding-box; }
+  @supports not selector(::-webkit-scrollbar) { * { scrollbar-width: thin; scrollbar-color: #f07cb0 transparent; } }
+
+  /* cute cursors: pink arrow, sakura on anything clickable */
+  @media (hover: hover) and (pointer: fine) {
+    :root {
+      --cur: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Cpath d='M4 3l16 12-7 1 4 8-4 2-4-8-5 5z' fill='%23ff8fbf' stroke='%23fff' stroke-width='2' stroke-linejoin='round'/%3E%3C/svg%3E") 4 3, auto;
+      --cur-hand: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='28' viewBox='0 0 28 28'%3E%3Cg fill='%23ff8fbf' stroke='%23fff' stroke-width='1.2'%3E%3Cellipse cx='14' cy='7' rx='5' ry='6.5'/%3E%3Cellipse cx='14' cy='7' rx='5' ry='6.5' transform='rotate(72 14 14)'/%3E%3Cellipse cx='14' cy='7' rx='5' ry='6.5' transform='rotate(144 14 14)'/%3E%3Cellipse cx='14' cy='7' rx='5' ry='6.5' transform='rotate(216 14 14)'/%3E%3Cellipse cx='14' cy='7' rx='5' ry='6.5' transform='rotate(288 14 14)'/%3E%3C/g%3E%3Ccircle cx='14' cy='14' r='3' fill='%23ffd25e'/%3E%3C/svg%3E") 14 14, pointer;
+    }
+    html, body { cursor: var(--cur); }
+    a, button, .icon, .btn, .bar, .queue li, .menubar button, .dock a, .dock button, .lights button, .sample-tabs button, .tr-switch button, .controls button { cursor: var(--cur-hand); }
+  }
 
   /* short desktop screens: tighten the icons so all eight fit */
   @media (min-width: 761px) and (max-height: 760px) {
@@ -576,6 +604,23 @@
     </div>
   </section>
 
+  <!-- Trash -->
+  <section class="window" id="w-trash" aria-labelledby="t-trash" style="width:440px" hidden>
+    <div class="titlebar" data-drag><div class="lights"><button class="close" aria-label="Close">×</button><button class="min" aria-label="Minimize">−</button><button class="zoom" aria-label="Zoom">+</button></div><span id="t-trash">trash</span></div>
+    <div class="body">
+      <p class="trash-intro">every translator has a trash folder. these literal translations never got past me.</p>
+      <ul class="trash">
+          <li><span lang="id">kawasan berikat</span><s>tied-up area</s><b>bonded zone</b></li>
+          <li><span lang="id">bea masuk</span><s>entrance fee</s><b>import duty</b></li>
+          <li><span lang="id">barang kena pajak</span><s>goods hit by tax</s><b>taxable goods</b></li>
+          <li><span lang="id">meja hijau</span><s>green table</s><b>court</b></li>
+          <li><span lang="id">pasal karet</span><s>rubber article</s><b>a vaguely worded provision</b></li>
+          <li><span lang="id">anak perusahaan</span><s>company child</s><b>subsidiary</b></li>
+      </ul>
+      <div class="trash-foot"><span id="trash-note">6 items</span><button class="btn" id="trash-empty">empty trash</button></div>
+    </div>
+  </section>
+
   <!-- Credentials (list view) -->
   <section class="window" id="w-creds" aria-labelledby="t-creds" style="width:600px" hidden>
     <div class="titlebar" data-drag><div class="lights"><button class="close" aria-label="Close">×</button><button class="min" aria-label="Minimize">−</button><button class="zoom" aria-label="Zoom">+</button></div><span id="t-creds">credentials</span></div>
@@ -669,6 +714,8 @@
   <a class="g7" href="https://www.linkedin.com/in/ynnnfl" target="_blank" rel="noopener" data-tip="LinkedIn" aria-label="LinkedIn">in</a>
   <a class="g11" href="https://www.instagram.com/ynnnfl/" target="_blank" rel="noopener" data-tip="Instagram" aria-label="Instagram"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#fff" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#fff" stroke="none"/></svg></a>
   <a class="g8 hide-sm" href="https://www.upwork.com/freelancers/~01e0012803e8ed7dcc" target="_blank" rel="noopener" data-tip="Upwork" aria-label="Upwork">Up</a>
+  <span class="sep hide-sm"></span>
+  <button class="g13 hide-sm" data-open="trash" data-tip="trash" aria-label="Trash">🗑️<span class="dot"></span></button>
 </nav>
 
 <script>
@@ -792,6 +839,11 @@
           document.getElementById(b.dataset.show).hidden = b !== btn;
         });
       });
+    });
+
+    // trash: it never really empties
+    document.getElementById("trash-empty").addEventListener("click", function () {
+      document.getElementById("trash-note").textContent = "nope, these stay here as a warning.";
     });
 
     // music player: dummy playlist with a soft synth so play actually makes a sound
