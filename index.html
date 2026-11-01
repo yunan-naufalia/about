@@ -384,7 +384,7 @@
     .finder { grid-template-columns: 1fr; }
     .finder .side { display: none; }
     .dock { gap: 6px; padding: 6px 8px 5px; max-width: calc(100vw - 16px); }
-    .dock a, .dock button { width: 50px; height: 50px; font-size: 24px; border-radius: 13px; }
+    .dock a, .dock button { width: min(46px, 12.6vw); height: min(46px, 12.6vw); font-size: 22px; border-radius: 12px; }
     .dock a:hover, .dock button:hover { transform: none; }
     .dock .hide-sm { display: none; }
     .dock [data-tip]::after { display: none; }
@@ -733,7 +733,7 @@
   <a class="g11" href="https://www.instagram.com/ynnnfl/" target="_blank" rel="noopener" data-tip="Instagram" aria-label="Instagram"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#fff" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#fff" stroke="none"/></svg></a>
   <a class="g8" href="https://www.upwork.com/freelancers/~01e0012803e8ed7dcc" target="_blank" rel="noopener" data-tip="Upwork" aria-label="Upwork">Up</a>
   <span class="sep hide-sm"></span>
-  <button class="g13 hide-sm" data-open="trash" data-tip="trash" aria-label="Trash">🗑️<span class="dot"></span></button>
+  <button class="g13" data-open="trash" data-tip="trash" aria-label="Trash">🗑️<span class="dot"></span></button>
 </nav>
 
 <script>
