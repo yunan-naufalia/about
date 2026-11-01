@@ -333,17 +333,31 @@
     .icon .art.thumb, .icon .art.thumb img { width: 46px; height: 46px; }
   }
 
+  /* short phones: drop the volume row so the player clears the dock */
+  @media (max-width: 760px) and (max-height: 620px) { .vol { display: none; } }
+
   /* phone: icons become a home screen, windows become sheets */
   @media (max-width: 760px) {
     body { overflow: auto; }
     .menubar .menu, .menubar .app, .menubar .np { display: none; }
-    .desktop { position: relative; inset: auto; padding: 44px 14px 120px; min-height: 100dvh; display: flex; flex-direction: column; gap: 18px; }
+    .desktop { position: relative; inset: auto; padding: 42px 14px 88px; min-height: 100dvh; display: flex; flex-direction: column; gap: 12px; }
     .note, .music { position: static !important; width: auto; }
     .note { order: -2; }
     .music { order: 1; display: flex !important; }
     .music .queue { display: none; }
     .note .titlebar, .music .titlebar { display: none; }
-    .icons { position: static; width: auto; grid-template-columns: repeat(4, 1fr); gap: 10px 4px; }
+    .icons { position: static; width: auto; grid-template-columns: repeat(4, 1fr); gap: 4px; }
+    .icon { padding: 3px 2px; }
+    .icon .label { white-space: nowrap; }
+    .note { font-size: 16px; }
+    .note .body { padding: 10px 14px 10px; }
+    .music .body { padding: 10px 14px 10px; }
+    .player { grid-template-columns: 52px 1fr; }
+    .cover { width: 52px; height: 52px; font-size: 24px; }
+    .bar { margin-top: 10px; }
+    .controls { margin-top: 0; }
+    .controls .pp { width: 38px; height: 38px; }
+    .vol { margin-top: 2px; }
     .window:not(.note):not(.music) {
       position: fixed !important; left: 8px !important; right: 8px; top: 38px !important; bottom: 88px; width: auto !important; max-width: none; max-height: none !important;
       z-index: 950 !important;
@@ -362,7 +376,7 @@
     .finder { grid-template-columns: 1fr; }
     .finder .side { display: none; }
     .dock { gap: 6px; padding: 6px 8px 5px; max-width: calc(100vw - 16px); }
-    .dock a, .dock button { width: 42px; height: 42px; font-size: 22px; border-radius: 11px; }
+    .dock a, .dock button { width: 50px; height: 50px; font-size: 24px; border-radius: 13px; }
     .dock a:hover, .dock button:hover { transform: none; }
     .dock .hide-sm { display: none; }
     .dock [data-tip]::after { display: none; }
@@ -709,7 +723,7 @@
   <a class="g9" href="https://wa.me/6281312065877" target="_blank" rel="noopener" data-tip="WhatsApp" aria-label="WhatsApp"><svg viewBox="0 0 32 32" width="30" height="30" aria-hidden="true"><path d="M16 4.2A11.8 11.8 0 0 0 5.9 22l-1.6 5.8 6-1.6A11.8 11.8 0 1 0 16 4.2z" fill="none" stroke="#fff" stroke-width="2.3" stroke-linejoin="round"/><path d="M11.7 9.6c.3-.5.6-.6 1-.6h.8c.3 0 .6.1.8.6l1.1 2.6c.1.3.1.6-.1.9l-.7.9c-.2.2-.2.5 0 .8.9 1.6 2.2 2.8 3.8 3.6.3.2.6.1.8-.1l.9-1.1c.2-.3.5-.3.8-.2l2.6 1.2c.3.2.5.3.5.6 0 .9-.3 1.9-1.1 2.5-.8.6-1.9.9-3 .6-3.2-.9-6.1-3.6-7.4-6.6-.6-1.4-.8-3 .2-4.7z" fill="#fff"/></svg></a>
   <a class="g7" href="https://www.linkedin.com/in/ynnnfl" target="_blank" rel="noopener" data-tip="LinkedIn" aria-label="LinkedIn">in</a>
   <a class="g11" href="https://www.instagram.com/ynnnfl/" target="_blank" rel="noopener" data-tip="Instagram" aria-label="Instagram"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#fff" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#fff" stroke="none"/></svg></a>
-  <a class="g8 hide-sm" href="https://www.upwork.com/freelancers/~01e0012803e8ed7dcc" target="_blank" rel="noopener" data-tip="Upwork" aria-label="Upwork">Up</a>
+  <a class="g8" href="https://www.upwork.com/freelancers/~01e0012803e8ed7dcc" target="_blank" rel="noopener" data-tip="Upwork" aria-label="Upwork">Up</a>
   <span class="sep hide-sm"></span>
   <button class="g13 hide-sm" data-open="trash" data-tip="trash" aria-label="Trash">🗑️<span class="dot"></span></button>
 </nav>
