@@ -3,13 +3,21 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Yunan Naufalia Hanantio · EN↔ID translator</title>
-<meta name="description" content="English–Indonesian translator for customs, trade, tax, legal, and business content. HPI Professional Member (HPI-01-26-5793).">
-<meta property="og:title" content="Yunan Naufalia Hanantio · EN↔ID translator">
+<title>Yunan Naufalia Hanantio · English–Indonesian translator</title>
+<meta name="description" content="Yunan Naufalia Hanantio is an English–Indonesian translator for customs, trade, tax, legal, and business documents, with 8+ years in customs and international trade. Request a quote.">
+<link rel="canonical" href="https://yunan-naufalia.com/">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://yunan-naufalia.com/">
+<meta property="og:title" content="Yunan Naufalia Hanantio · English–Indonesian translator">
 <meta property="og:description" content="customs, trade, tax, legal, and business translation between English and Indonesian.">
-<meta property="og:image" content="photo.jpg">
+<meta property="og:image" content="https://yunan-naufalia.com/photo.jpg">
+<meta name="twitter:card" content="summary">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Person","name":"Yunan Naufalia Hanantio","jobTitle":"English–Indonesian translator","url":"https://yunan-naufalia.com/","image":"https://yunan-naufalia.com/photo.jpg","knowsLanguage":["en","id"],"sameAs":["https://www.linkedin.com/in/ynnnfl","https://www.upwork.com/freelancers/~01e0012803e8ed7dcc","https://www.instagram.com/ynnnfl/"]}
+</script>
 <meta name="theme-color" content="#ffd6e7">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🌸%3C/text%3E%3C/svg%3E">
+<link rel="icon" type="image/png" sizes="192x192" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -326,7 +334,7 @@
   }
 
   /* short desktop screens: tighten the icons so all eight fit */
-  @media (min-width: 761px) and (max-height: 760px) {
+  @media (min-width: 761px) and (max-height: 760px) and (pointer: fine) {
     .icons { gap: 0; }
     .icon { padding: 2px 4px; gap: 2px; }
     .icon .art { width: 54px; height: 46px; }
@@ -337,7 +345,7 @@
   @media (max-width: 760px) and (max-height: 620px) { .vol { display: none; } }
 
   /* phone: icons become a home screen, windows become sheets */
-  @media (max-width: 760px) {
+  @media (max-width: 760px), (max-height: 500px) and (pointer: coarse) {
     body { overflow: auto; }
     .menubar .menu, .menubar .app, .menubar .np { display: none; }
     .desktop { position: relative; inset: auto; padding: 42px 14px 88px; min-height: 100dvh; display: flex; flex-direction: column; gap: 12px; }
@@ -731,7 +739,7 @@
 <script>
   (function () {
     var desktop = document.getElementById("desktop");
-    var phone = matchMedia("(max-width: 760px)");
+    var phone = matchMedia("(max-width: 760px), (max-height: 500px) and (pointer: coarse)");
 
     // menu-bar clock
     var clock = document.getElementById("clock");
@@ -813,7 +821,7 @@
       var el = bar.closest(".window"), sx, sy, ox, oy, dragging = false;
       bar.addEventListener("pointerdown", function (e) {
         if (phone.matches || e.target.closest(".lights") || el.classList.contains("zoomed")) return;
-        dragging = true; sx = e.clientX; sy = e.clientY; ox = el.offsetLeft; oy = el.offsetTop;
+        dragging = true; el.dataset.moved = "1"; sx = e.clientX; sy = e.clientY; ox = el.offsetLeft; oy = el.offsetTop;
         bar.setPointerCapture(e.pointerId);
       });
       bar.addEventListener("pointermove", function (e) {
@@ -839,6 +847,7 @@
           document.getElementById(t.getAttribute("aria-controls")).hidden = t !== tab;
         });
         document.querySelector("#w-samples .main").scrollTop = 0;
+        tab.scrollIntoView({ block: "nearest", inline: "nearest" });
       });
     });
 
@@ -955,22 +964,28 @@
     render();
 
     // start-up layout
-    if (!phone.matches) {
-      var sticky = win("note"), music = win("music");
-      // one column just left of the folder icons: note level with the first icon,
-      // player's bottom level with the last one (but never down onto the dock)
-      var icons = document.querySelector(".icons");
+    var sticky = win("note"), music = win("music"), icons = document.querySelector(".icons");
+    // one column just left of the folder icons: note level with the first icon,
+    // player's bottom level with the last one (but never down onto the dock)
+    function layoutWidgets() {
+      if (phone.matches) return;
       var nx = Math.max(16, innerWidth - 118 - 24 - sticky.offsetWidth);
-      sticky.style.left = music.style.left = nx + "px"; sticky.style.top = (icons.offsetTop + 6) + "px";
+      if (!sticky.dataset.moved) { sticky.style.left = nx + "px"; sticky.style.top = (icons.offsetTop + 6) + "px"; }
       sticky.dataset.placed = music.dataset.placed = "1";
-      var stack = function () {
-        var min = sticky.offsetTop + sticky.offsetHeight + 16;
-        var bottom = Math.min(icons.offsetTop + icons.offsetHeight - 6, innerHeight - 30 - 96);
-        music.style.top = Math.max(min, bottom - music.offsetHeight) + "px";
-        return music.style.top;
-      };
-      var stacked = stack();
-      if (document.fonts) document.fonts.ready.then(function () { if (music.style.top === stacked) stack(); });
+      if (music.dataset.moved) return;
+      var min = sticky.offsetTop + sticky.offsetHeight + 16;
+      var bottom = Math.min(icons.offsetTop + icons.offsetHeight - 6, innerHeight - 30 - 96);
+      music.style.left = nx + "px";
+      music.style.top = Math.max(min, bottom - music.offsetHeight) + "px";
+    }
+    layoutWidgets();
+    if (document.fonts) document.fonts.ready.then(layoutWidgets);
+    addEventListener("resize", function () {
+      layoutWidgets();
+      document.querySelectorAll(".window:not([hidden])").forEach(function (w) { if (!isWidget(w)) fit(w); });
+    });
+    phone.addEventListener("change", layoutWidgets);
+    if (!phone.matches) {
       var about = win("about");
       about.hidden = false;
       about.style.left = "14px"; // tucked into the top-left corner
