@@ -56,7 +56,11 @@
   .menubar .logo { font-size: 15px; padding: 2px 8px; }
   .menubar .app { font-weight: 700; }
   .menubar .spacer { flex: 1; }
-  .menubar .np { font-size: 12px; color: var(--muted); padding: 0 10px; max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .menubar .np { font-size: 12px; color: var(--muted); margin: 0 10px; width: 200px; overflow: hidden; white-space: nowrap;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+  .np-track { display: inline-flex; animation: np-scroll 16s linear infinite; }
+  .np-track span { flex: none; padding-right: 40px; }
+  @keyframes np-scroll { to { transform: translateX(-50%); } }
   .menubar .np[hidden] { display: none; }
   .clock { font-variant-numeric: tabular-nums; padding: 3px 6px; }
 
@@ -90,7 +94,7 @@
   .window.inactive .titlebar { opacity: .82; }
   .window.inactive .lights button { background: #e3cfd8 !important; }
   @keyframes pop { from { transform: scale(.94); opacity: 0; } to { transform: none; opacity: 1; } }
-  @media (prefers-reduced-motion: reduce) { .window { animation: none; } .dock a, .dock button { transition: none !important; } .eq i { animation: none !important; } }
+  @media (prefers-reduced-motion: reduce) { .window { animation: none; } .dock a, .dock button { transition: none !important; } .eq i { animation: none !important; } .np-track { animation: none; } }
   .titlebar {
     position: relative; flex: none; height: 38px; display: flex; align-items: center; justify-content: center;
     font-size: 13px; font-weight: 600; cursor: grab; touch-action: none; user-select: none; -webkit-user-select: none;
@@ -254,6 +258,23 @@
   .g9 { background: linear-gradient(#61fd7d, #25cf43); } .g10 { background: linear-gradient(#ff9fb8, #ff3b6b); }
   .g11 { background: radial-gradient(circle at 30% 110%, #fdd36b 0%, #fa7e3c 30%, #e1306c 60%, #b33ab4 85%, #7a3ff0 100%); }
 
+  /* samples: side-by-side extracts */
+  .sample-intro { color: var(--muted); }
+  .pair { display: grid; grid-template-columns: 1fr 1fr; background: #fff; border-radius: 12px; overflow: hidden; box-shadow: 0 0 0 .5px var(--line); margin-top: 12px; user-select: text; -webkit-user-select: text; }
+  .pair > div { padding: 12px 14px; line-height: 1.4; font-weight: 500; }
+  .pair small { display: block; font-size: 11px; font-weight: 600; color: var(--muted); margin-bottom: 4px; }
+  .pair .side-en { background: rgba(255,214,231,.3); }
+  .body .pair .tn { grid-column: 1 / -1; margin: 0; padding: 10px 14px 12px; font-size: 12.5px; color: var(--muted); border-top: .5px solid var(--line); }
+  .pair .tn b { color: var(--pink-deep); margin-right: 4px; }
+
+  /* short desktop screens: tighten the icons so all eight fit */
+  @media (min-width: 761px) and (max-height: 760px) {
+    .icons { gap: 0; }
+    .icon { padding: 2px 4px; gap: 2px; }
+    .icon .art { width: 54px; height: 46px; }
+    .icon .art.thumb, .icon .art.thumb img { width: 46px; height: 46px; }
+  }
+
   /* phone: icons become a home screen, windows become sheets */
   @media (max-width: 760px) {
     body { overflow: auto; }
@@ -270,6 +291,7 @@
       z-index: 950 !important;
     }
     .titlebar { cursor: default; }
+    .pair { grid-template-columns: 1fr; }
     .about { grid-template-columns: 1fr; }
     .about img { width: 120px; height: 140px; }
     .facts { grid-template-columns: repeat(2, 1fr); }
@@ -304,11 +326,12 @@
   <button class="app" data-open="about">Yunan</button>
   <button class="menu" data-open="about">about</button>
   <button class="menu" data-open="services">services</button>
+  <button class="menu" data-open="samples">samples</button>
   <button class="menu" data-open="creds">credentials</button>
   <button class="menu" data-open="reviews">reviews</button>
   <button class="menu" data-open="contact">contact</button>
   <span class="spacer"></span>
-  <span class="np" id="np" hidden></span>
+  <span class="np" id="np" hidden><span class="np-track" id="np-track"><span></span><span aria-hidden="true"></span></span></span>
   <span class="clock" id="clock"></span>
 </header>
 
@@ -352,6 +375,7 @@
   <nav class="icons" aria-label="Folders">
     <button class="icon" data-open="about"><span class="art"><svg><use href="#folder"/></svg><span class="em">👩🏻‍💻</span></span><span class="label">about me</span></button>
     <button class="icon" data-open="services"><span class="art"><svg><use href="#folder"/></svg><span class="em">🌐</span></span><span class="label">specializations</span></button>
+    <button class="icon" data-open="samples"><span class="art"><svg><use href="#folder"/></svg><span class="em">📝</span></span><span class="label">samples</span></button>
     <button class="icon" data-open="creds"><span class="art"><svg><use href="#folder"/></svg><span class="em">🎓</span></span><span class="label">credentials</span></button>
     <button class="icon" data-open="reviews"><span class="art"><svg><use href="#folder"/></svg><span class="em">💌</span></span><span class="label">reviews</span></button>
     <button class="icon" data-open="process"><span class="art"><svg><use href="#folder"/></svg><span class="em">✅</span></span><span class="label">how I work</span></button>
@@ -413,6 +437,35 @@
           <span class="chip">layout matched to the original</span>
         </div>
       </div>
+    </div>
+  </section>
+
+  <!-- Samples -->
+  <section class="window" id="w-samples" aria-labelledby="t-samples" style="width:640px" hidden>
+    <div class="titlebar" data-drag><div class="lights"><button class="close" aria-label="Close">×</button><button class="min" aria-label="Minimize">−</button><button class="zoom" aria-label="Zoom">+</button></div><span id="t-samples">samples</span></div>
+    <div class="body">
+      <h2 style="font-size:22px;color:var(--pink-deep);margin-bottom:6px">Sustainability Report · ID → EN</h2>
+      <p class="sample-intro">A self-initiated translation of the President Director's message in AIA Indonesia's 2024 sustainability report, with 23 translator's notes. It wasn't commissioned by AIA, and I'm not affiliated with the company. Here are four short extracts.</p>
+        <div class="pair">
+          <div class="side-id"><small>Indonesian (source)</small><span lang="id">Nilai pertanggungan mencapai Rp735 triliun</span></div>
+          <div class="side-en"><small>English (translation)</small><span>Total sum assured had reached IDR 735 trillion</span></div>
+          <p class="tn"><b>Translator's note</b> “Nilai pertanggungan” is “sum assured,” the standard life insurance term. English number conventions apply throughout, so “Rp” becomes IDR.</p>
+        </div>
+        <div class="pair">
+          <div class="side-id"><small>Indonesian (source)</small><span lang="id">Rencana Aksi Keuangan Berkelanjutan (RAKB)</span></div>
+          <div class="side-en"><small>English (translation)</small><span>Sustainable Finance Action Plan (RAKB)</span></div>
+          <p class="tn"><b>Translator's note</b> This is the plan financial services institutions submit to OJK under POJK No. 51/POJK.03/2017. I kept the Indonesian acronym because it names a regulatory filing.</p>
+        </div>
+        <div class="pair">
+          <div class="side-id"><small>Indonesian (source)</small><span lang="id">Undang-Undang Nomor 27 Tahun 2022 tentang Perlindungan Data Pribadi</span></div>
+          <div class="side-en"><small>English (translation)</small><span>Law No. 27 of 2022 on Personal Data Protection</span></div>
+          <p class="tn"><b>Translator's note</b> This is the standard English title. The source spells it “Perlindungan,” while the statute’s own title uses “Pelindungan.” The English is unaffected.</p>
+        </div>
+        <div class="pair">
+          <div class="side-id"><small>Indonesian (source)</small><span lang="id">Direksi berperan aktif dalam merumuskan strategi</span></div>
+          <div class="side-en"><small>English (translation)</small><span>The Board of Directors takes an active role in formulating strategy</span></div>
+          <p class="tn"><b>Translator's note</b> Indonesian companies have a two-tier board: the Direksi (executive management) is separate from the Dewan Komisaris (the supervisory Board of Commissioners).</p>
+        </div>
     </div>
   </section>
 
@@ -644,7 +697,12 @@
       $("pp").textContent = playing ? "❚❚" : "▶";
       $("pp").setAttribute("aria-label", playing ? "Pause" : "Play");
       $("player").classList.toggle("playing", playing);
-      var np = $("np"); np.hidden = !playing; np.textContent = "♫ " + tr.t + " — " + tr.a;
+      var np = $("np"), label = "♫ " + tr.t + " — " + tr.a;
+      np.hidden = !playing;
+      if (np.dataset.label !== label) { // render runs every beat; only touch the text on a new song so the scroll doesn't restart
+        np.dataset.label = label;
+        [].forEach.call($("np-track").children, function (c) { c.textContent = label; });
+      }
     }
     function midi(n) { return 440 * Math.pow(2, (n - 69) / 12); }
     function note(freq, when, dur, vol, type) {
