@@ -186,8 +186,6 @@
   .mail .row span:first-child { color: var(--muted); width: 64px; flex: none; }
   .mail .msg { padding: 14px 0; min-height: 90px; color: var(--muted); }
   .mail .actions { display: flex; flex-wrap: wrap; gap: 8px; }
-  .mail .socials { margin-top: 8px; }
-  .body .mail-hint, .mail .mail-hint { margin: 8px 0 0; font-size: 12px; color: var(--pink-deep); text-align: left; }
   .btn {
     display: inline-flex; align-items: center; gap: 6px; padding: 7px 14px; border-radius: 8px; font-weight: 600; font-size: 13px;
     text-decoration: none; color: var(--ink); background: #fff; box-shadow: 0 0 0 .5px rgba(120,50,80,.25), 0 1px 2px rgba(120,50,80,.12); cursor: pointer; border: 0;
@@ -704,12 +702,7 @@
         <p>got a document? send the file and your deadline, and I'll reply with a quote, usually within a few hours. ♡</p>
       </div>
       <div class="actions">
-        <a class="btn primary" id="quote-btn" href="mailto:ynaufaliah@gmail.com?subject=translation%20quote%20request">✉️ request a quote</a>
-        <a class="btn" href="https://mail.google.com/mail/?view=cm&amp;to=ynaufaliah@gmail.com&amp;su=translation%20quote%20request" target="_blank" rel="noopener">open in Gmail</a>
-        <button class="btn" id="copy-email" type="button">copy email</button>
-      </div>
-      <p class="mail-hint" id="mail-hint" hidden>nothing opened? your device may not have an email app set up, so try Gmail or copy my email.</p>
-      <div class="actions socials">
+        <a class="btn primary" href="https://mail.google.com/mail/?view=cm&amp;to=ynaufaliah@gmail.com&amp;su=translation%20quote%20request" target="_blank" rel="noopener">✉️ request a quote</a>
         <a class="btn" href="https://wa.me/6281312065877" target="_blank" rel="noopener">WhatsApp</a>
         <a class="btn" href="https://www.linkedin.com/in/ynnnfl" target="_blank" rel="noopener">LinkedIn</a>
         <a class="btn" href="https://www.instagram.com/ynnnfl/" target="_blank" rel="noopener">Instagram</a>
@@ -867,21 +860,6 @@
           document.getElementById(b.dataset.show).hidden = b !== btn;
         });
       });
-    });
-
-    // contact: mailto does nothing without an email app, so offer a hint and a copy button
-    document.getElementById("quote-btn").addEventListener("click", function () {
-      setTimeout(function () { document.getElementById("mail-hint").hidden = false; }, 900);
-    });
-    document.getElementById("copy-email").addEventListener("click", function () {
-      var btn = this, email = "ynaufaliah@gmail.com";
-      function done() { btn.textContent = "copied!"; setTimeout(function () { btn.textContent = "copy email"; }, 1600); }
-      function fallback() {
-        var t = document.createElement("textarea"); t.value = email; document.body.appendChild(t); t.select();
-        try { document.execCommand("copy"); done(); } catch (e) { btn.textContent = email; }
-        t.remove();
-      }
-      if (navigator.clipboard) navigator.clipboard.writeText(email).then(done, fallback); else fallback();
     });
 
     // trash: it never really empties
