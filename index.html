@@ -696,14 +696,14 @@
   <section class="window" id="w-contact" aria-labelledby="t-contact" style="width:520px" hidden>
     <div class="titlebar" data-drag><div class="lights"><button class="close" aria-label="Close">×</button><button class="min" aria-label="Minimize">−</button><button class="zoom" aria-label="Zoom">+</button></div><span id="t-contact">new message</span></div>
     <div class="body mail">
-      <div class="row"><span>to:</span><span>Yunan &lt;ynaufaliah@gmail.com&gt;</span></div>
+      <div class="row"><span>to:</span><span>Yunan &lt;<span data-mail-text>ynaufaliah [at] gmail [dot] com</span>&gt;</span></div>
       <div class="row"><span>subject:</span><span>translation quote request</span></div>
       <div class="msg">
         <p>got a document? send the file and your deadline, and I'll reply with a quote, usually within a few hours. ♡</p>
       </div>
       <div class="actions">
-        <a class="btn primary" href="https://mail.google.com/mail/?view=cm&amp;to=ynaufaliah@gmail.com&amp;su=translation%20quote%20request" target="_blank" rel="noopener">✉️ request a quote</a>
-        <a class="btn" href="https://wa.me/6281312065877" target="_blank" rel="noopener">WhatsApp</a>
+        <a class="btn primary" href="#" data-mail target="_blank" rel="noopener">✉️ request a quote</a>
+        <a class="btn" href="#" data-wa target="_blank" rel="noopener">WhatsApp</a>
         <a class="btn" href="https://www.linkedin.com/in/ynnnfl" target="_blank" rel="noopener">LinkedIn</a>
         <a class="btn" href="https://www.instagram.com/ynnnfl/" target="_blank" rel="noopener">Instagram</a>
         <a class="btn" href="https://www.upwork.com/freelancers/~01e0012803e8ed7dcc" target="_blank" rel="noopener">Upwork</a>
@@ -728,7 +728,7 @@
   <button class="g10 hide-sm" data-open="music" data-tip="music" aria-label="Music">🎵<span class="dot"></span></button>
   <button class="g6" data-open="contact" data-tip="mail" aria-label="Mail">✉️<span class="dot"></span></button>
   <span class="sep"></span>
-  <a class="g9" href="https://wa.me/6281312065877" target="_blank" rel="noopener" data-tip="WhatsApp" aria-label="WhatsApp"><svg viewBox="0 0 32 32" width="30" height="30" aria-hidden="true"><path d="M16 4.2A11.8 11.8 0 0 0 5.9 22l-1.6 5.8 6-1.6A11.8 11.8 0 1 0 16 4.2z" fill="none" stroke="#fff" stroke-width="2.3" stroke-linejoin="round"/><path d="M11.7 9.6c.3-.5.6-.6 1-.6h.8c.3 0 .6.1.8.6l1.1 2.6c.1.3.1.6-.1.9l-.7.9c-.2.2-.2.5 0 .8.9 1.6 2.2 2.8 3.8 3.6.3.2.6.1.8-.1l.9-1.1c.2-.3.5-.3.8-.2l2.6 1.2c.3.2.5.3.5.6 0 .9-.3 1.9-1.1 2.5-.8.6-1.9.9-3 .6-3.2-.9-6.1-3.6-7.4-6.6-.6-1.4-.8-3 .2-4.7z" fill="#fff"/></svg></a>
+  <a class="g9" href="#" data-wa target="_blank" rel="noopener" data-tip="WhatsApp" aria-label="WhatsApp"><svg viewBox="0 0 32 32" width="30" height="30" aria-hidden="true"><path d="M16 4.2A11.8 11.8 0 0 0 5.9 22l-1.6 5.8 6-1.6A11.8 11.8 0 1 0 16 4.2z" fill="none" stroke="#fff" stroke-width="2.3" stroke-linejoin="round"/><path d="M11.7 9.6c.3-.5.6-.6 1-.6h.8c.3 0 .6.1.8.6l1.1 2.6c.1.3.1.6-.1.9l-.7.9c-.2.2-.2.5 0 .8.9 1.6 2.2 2.8 3.8 3.6.3.2.6.1.8-.1l.9-1.1c.2-.3.5-.3.8-.2l2.6 1.2c.3.2.5.3.5.6 0 .9-.3 1.9-1.1 2.5-.8.6-1.9.9-3 .6-3.2-.9-6.1-3.6-7.4-6.6-.6-1.4-.8-3 .2-4.7z" fill="#fff"/></svg></a>
   <a class="g7" href="https://www.linkedin.com/in/ynnnfl" target="_blank" rel="noopener" data-tip="LinkedIn" aria-label="LinkedIn">in</a>
   <a class="g11" href="https://www.instagram.com/ynnnfl/" target="_blank" rel="noopener" data-tip="Instagram" aria-label="Instagram"><svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="#fff" stroke-width="2" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="#fff" stroke="none"/></svg></a>
   <a class="g8" href="https://www.upwork.com/freelancers/~01e0012803e8ed7dcc" target="_blank" rel="noopener" data-tip="Upwork" aria-label="Upwork">Up</a>
@@ -738,6 +738,15 @@
 
 <script>
   (function () {
+    // contact links are built here so the address and number aren't in the HTML for spam bots
+    var mail = ["moc.liamg", "hailafuany"].map(function (p) { return p.split("").reverse().join(""); }).reverse().join("@");
+    var wa = ["7785", "6021", "318", "26"].join("").split("").reverse().join("");
+    document.querySelectorAll("[data-mail-text]").forEach(function (el) { el.textContent = mail; });
+    document.querySelectorAll("[data-mail]").forEach(function (a) {
+      a.href = "https://mail.google.com/mail/?view=cm&to=" + mail + "&su=translation%20quote%20request";
+    });
+    document.querySelectorAll("[data-wa]").forEach(function (a) { a.href = "https://wa.me/" + wa; });
+
     var desktop = document.getElementById("desktop");
     var phone = matchMedia("(max-width: 760px), (max-height: 500px) and (pointer: coarse)");
 
